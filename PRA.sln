@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRA.Core", "PRA.Core\PRA.Core.csproj", "{DF093CE1-497E-4749-ADA2-A78189D742A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRA.CLI", "PRA.CLI\PRA.CLI.csproj", "{C9A49A34-EBEE-4C5E-A1CF-86F5194EEB4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRA.GUI", "PRA.GUI\PRA.GUI.csproj", "{11650CB4-DDE5-42E8-9525-25C645E2760C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF093CE1-497E-4749-ADA2-A78189D742A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF093CE1-497E-4749-ADA2-A78189D742A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF093CE1-497E-4749-ADA2-A78189D742A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF093CE1-497E-4749-ADA2-A78189D742A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A49A34-EBEE-4C5E-A1CF-86F5194EEB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A49A34-EBEE-4C5E-A1CF-86F5194EEB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A49A34-EBEE-4C5E-A1CF-86F5194EEB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A49A34-EBEE-4C5E-A1CF-86F5194EEB4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11650CB4-DDE5-42E8-9525-25C645E2760C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11650CB4-DDE5-42E8-9525-25C645E2760C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11650CB4-DDE5-42E8-9525-25C645E2760C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11650CB4-DDE5-42E8-9525-25C645E2760C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
