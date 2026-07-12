@@ -36,24 +36,14 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
                 result.PageFaults++;
 
                 if (frames.Count < frameCount) {
-                    // Empty frame available
                     frames.Add(page);
                     referenceBits.Add(true);
                 } else {
-                    // Second Chance replacement
-                    while (true) {
-                        if (!referenceBits[pointer]) {
-                            replacedPage = frames[pointer];
-                            frames[pointer] = page;
-                            referenceBits[pointer] = true;
+                    int victimIndex = FindVictim(referenceBits, ref pointer);
 
-                            pointer = (pointer + 1) % frameCount;
-                            break;
-                        }
-
-                        referenceBits[pointer] = false;
-                        pointer = (pointer + 1) % frameCount;
-                    }
+                    replacedPage = frames[victimIndex];
+                    frames[victimIndex] = page;
+                    referenceBits[victimIndex] = true;
                 }
             }
 
@@ -62,12 +52,25 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
                 IsPageFault = pageFault,
                 ReplacedPage = replacedPage,
                 Frames = FrameSnapshot.CreateFrameSnapshot(frames, frameCount),
-                ReferenceBits = [..referenceBits],
+                ReferenceBits = [.. referenceBits],
                 ClockPointer = pointer
             });
         }
 
         return result;
+    }
+
+    private static int FindVictim(List<bool> referenceBits, ref int pointer) {
+        while (true) {
+            if (!referenceBits[pointer]) {
+                int victimIndex = pointer;
+                pointer = (pointer + 1) % referenceBits.Count;
+                return victimIndex;
+            }
+
+            referenceBits[pointer] = false;
+            pointer = (pointer + 1) % referenceBits.Count;
+        }
     }
 
 }

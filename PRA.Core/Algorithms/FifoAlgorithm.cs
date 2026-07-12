@@ -32,7 +32,7 @@ public class FifoAlgorithm : IPageReplacementAlgorithm {
                     frames.Add(page);
                     queue.Enqueue(page);
                 } else {
-                    int victim = queue.Dequeue();
+                    int victim = FindVictim(queue);
                     replacedPage = victim;
 
                     int victimIndex = frames.IndexOf(victim);
@@ -52,5 +52,9 @@ public class FifoAlgorithm : IPageReplacementAlgorithm {
 
         return result;
     }
-    
+
+    private int FindVictim(Queue<int> queue) {
+        return queue.Dequeue();
+    }
+
 }
