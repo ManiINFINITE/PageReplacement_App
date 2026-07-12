@@ -19,27 +19,55 @@ public class MainMenu {
             string mode = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[yellow]What do you want to do?[/]")
-                    .AddChoices("Run a single algorithm", "Compare all algorithms"));
+                    .AddChoices(
+                        "Run a single algorithm",
+                        "Compare all algorithms",
+                        "Compare two algorithms side by side"
+                    ));
 
-            if (mode == "Compare all algorithms") {
-                new CompareViewer().Show(reference, frames);
-            } else {
-                var algorithms = AlgorithmFactory.GetAlgorithms();
+            var algorithms = AlgorithmFactory.GetAlgorithms();
+            var runner = new SimulationRunner();
 
-                var algorithmName = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("[yellow]Choose Algorithm[/]")
-                        .PageSize(10)
-                        .AddChoices(algorithms.Select(a => a.Name)));
+            switch (mode) {
+                case "Compare all algorithms":
+                    new CompareViewer().Show(reference, frames);
+                    break;
 
-                var selected = algorithms.First(a => a.Name == algorithmName);
-                var result = new SimulationRunner().Run(selected, reference, frames);
+                case "Compare two algorithms side by side": {
+                    var firstName = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("[yellow]Choose first algorithm[/]")
+                            .AddChoices(algorithms.Select(a => a.Name)));
 
-                new SimulationViewer().Show(result, reference);
+                    var secondName = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("[yellow]Choose second algorithm[/]")
+                            .AddChoices(algorithms.Select(a => a.Name).Where(n => n != firstName)));
+
+                    var algoA = algorithms.First(a => a.Name == firstName);
+                    var algoB = algorithms.First(a => a.Name == secondName);
+
+                    var resultA = runner.Run(algoA, reference, frames);
+                    var resultB = runner.Run(algoB, reference, frames);
+
+                    new SideBySideViewer().Show(resultA, resultB, reference);
+                    break;
+                }
+
+                default: {
+                    var algorithmName = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("[yellow]Choose Algorithm[/]")
+                            .PageSize(10)
+                            .AddChoices(algorithms.Select(a => a.Name)));
+
+                    var selected = algorithms.First(a => a.Name == algorithmName);
+                    var result = runner.Run(selected, reference, frames);
+
+                    new SimulationViewer().Show(result, reference);
+                    break;
+                }
             }
-
-            bool again = AnsiConsole.Confirm("[cyan]Run another simulation?[/]", true);
-            if (!again) return;
         }
     }
 
