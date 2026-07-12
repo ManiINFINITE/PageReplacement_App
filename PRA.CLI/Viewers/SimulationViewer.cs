@@ -1,25 +1,21 @@
 ﻿using PRA.CLI.Components;
 using PRA.Core.Models;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 
 namespace PRA.CLI.Viewers;
 
 public class SimulationViewer {
 
-    public void Show(
-        SimulationResult result,
-        IReadOnlyList<int> referenceString
-    ) {
+    private bool _showOverview = false;
+
+    public void Show(SimulationResult result, IReadOnlyList<int> referenceString) {
         int currentStep = 0;
+        AnsiConsole.Clear();
 
         while (true) {
-            AnsiConsole.Clear();
-
-            Header.Draw();
-
+            AnsiConsole.Cursor.SetPosition(0, 0); // avoid full clear-flicker every frame
             Draw(result, referenceString, currentStep);
-
-            Footer.Draw();
 
             var key = Console.ReadKey(true);
 
@@ -30,83 +26,83 @@ public class SimulationViewer {
                 case ConsoleKey.LeftArrow:
                     if (currentStep > 0) currentStep--;
                     break;
-                case ConsoleKey.Home:
-                    currentStep = 0;
-                    break;
-                case ConsoleKey.End:
-                    currentStep = result.Steps.Count - 1;
-                    break;
-                case ConsoleKey.Escape:
-                    return;
+                case ConsoleKey.Home: currentStep = 0; break;
+                case ConsoleKey.End: currentStep = result.Steps.Count - 1; break;
+                case ConsoleKey.T: _showOverview = !_showOverview; break;
+                case ConsoleKey.Escape: return;
             }
         }
     }
 
-    private static void Draw(
-        SimulationResult result,
-        IReadOnlyList<int> referenceString,
-        int currentStep
-    ) {
-        SimulationStep step = result.Steps[currentStep];
+    // SimulationViewer.cs
+    private void Draw(SimulationResult result, IReadOnlyList<int> referenceString, int currentStep) {
+        int frameCount = result.Steps[currentStep].Frames.Count;
 
-        var info = new Grid();
+        // Size the body to what the content actually needs, not the terminal height.
+        int historyRows = frameCount + 6; // border + header row + one row per frame + border
+        int framesRows = frameCount + 8; // reference panel + frame table
+        int statsRows = 10; // grid + breakdown chart
+        int bodyHeight = new[] { historyRows, framesRows, statsRows }.Max();
 
-        info.AddColumn();
-        info.AddColumn();
+        var root = new Layout("Root")
+            .SplitRows(
+                new Layout("Header").Size(12),
+                new Layout("Body").Size(bodyHeight),
+                new Layout("Footer").Size(3)
+            );
 
-        info.AddRow(
-            "[cyan]Algorithm[/]",
-            result.AlgorithmName);
+        root["Header"].Update(BuildStatusBar(result, currentStep));
 
-        info.AddRow(
-            "[cyan]Step[/]",
-            $"{currentStep + 1}/{result.Steps.Count}");
-
-        info.AddRow(
-            "[cyan]Current Page[/]",
-            step.CurrentPage.ToString());
-
-        info.AddRow(
-            "[cyan]Result[/]",
-            step.IsPageFault
-                ? "[red]Page Fault[/]"
-                : "[green]Page Hit[/]");
-
-        info.AddRow(
-            "[cyan]Replaced[/]",
-            step.ReplacedPage?.ToString() ?? "-");
-
-        var left = new Rows(
-            new Panel(info) {
-                Header = new PanelHeader("Information"),
-                Border = BoxBorder.Rounded
-            },
-            ReferencePanel.Build(
-                referenceString,
-                currentStep)
+        root["Body"].SplitColumns(
+            new Layout("Left").Ratio(3)
+                .SplitRows(
+                    new Layout("Reference").Size(4),
+                    new Layout("Frames").Ratio(1)
+                ),
+            new Layout("Middle").Ratio(4),
+            new Layout("Right").Ratio(3)
         );
 
-        var right = new Rows(
-            FramePanel.Build(step),
-            StatisticsPanel.Build(
-                result,
-                currentStep)
-        );
+        root["Body"]["Left"]["Reference"].Update(
+            ReferencePanel.Build(referenceString, result.Steps, currentStep));
 
-        var layout = new Layout();
+        root["Body"]["Left"]["Frames"].Update(
+            FramePanel.Build(result.Steps[currentStep]));
 
-        layout.SplitColumns(
-            new Layout("Left")
-                .Ratio(2),
-            new Layout("Right")
-                .Ratio(1)
-        );
+        root["Body"]["Middle"].Update(
+            HistoryTable.Build(result, referenceString, currentStep));
 
-        layout["Left"].Update(left);
+        root["Body"]["Right"].Update(
+            StatisticsPanel.Build(result, currentStep));
 
-        layout["Right"].Update(right);
+        root["Footer"].Update(Footer.Build());
 
-        AnsiConsole.Write(layout);
+        AnsiConsole.Write(root);
+    }
+
+    private static IRenderable BuildStatusBar(SimulationResult result, int currentStep) {
+        var step = result.Steps[currentStep];
+
+        var grid = new Grid();
+        grid.AddColumn(new GridColumn().PadTop(0).PadBottom(1));
+
+        grid.AddRow(new Markup($"[bold cornflowerblue]{result.AlgorithmName}[/]").Centered());
+        grid.AddRow(new Markup($"Step [yellow]{currentStep + 1}/{result.Steps.Count}[/]").Centered());
+        grid.AddRow(new Markup($"Page [white]{step.CurrentPage}[/]").Centered());
+        grid.AddRow(new Markup(step.IsPageFault ? "[red]FAULT[/]" : "[green]HIT[/]").Centered());
+
+        grid.AddRow(new Markup(
+            step.ReplacedPage is { } r
+                ? $"replaced [orange1]{r}[/]"
+                : "replaced [grey]nothing[/]"
+        ).Centered());
+
+        return new Panel(Align.Center(grid, VerticalAlignment.Middle)) {
+            Header = new PanelHeader("SIMULATION", Justify.Center),
+            Border = BoxBorder.Rounded,
+            Expand = true,
+            Padding = new Padding(2, 1, 2, 1)
+        };
     }
 
 }

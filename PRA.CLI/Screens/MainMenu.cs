@@ -9,33 +9,38 @@ namespace PRA.CLI.Screens;
 public class MainMenu {
 
     public void Show() {
-        Header.Draw();
+        while (true) {
+            AnsiConsole.Clear();
+            Header.Draw();
 
-        List<int> reference = UserInput.ReadReferenceString();
-        int frames = UserInput.ReadFrameCount();
+            List<int> reference = UserInput.ReadReferenceString();
+            int frames = UserInput.ReadFrameCount();
 
-        var algorithm =
-            AnsiConsole.Prompt(
+            string mode = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[yellow]Choose Algorithm[/]")
-                    .PageSize(10)
-                    .AddChoices(
-                        AlgorithmFactory
-                            .GetAlgorithms()
-                            .Select(a => a.Name)));
+                    .Title("[yellow]What do you want to do?[/]")
+                    .AddChoices("Run a single algorithm", "Compare all algorithms"));
 
-        var selected =
-            AlgorithmFactory
-                .GetAlgorithms()
-                .First(a => a.Name == algorithm);
+            if (mode == "Compare all algorithms") {
+                new CompareViewer().Show(reference, frames);
+            } else {
+                var algorithms = AlgorithmFactory.GetAlgorithms();
 
-        var runner = new SimulationRunner();
-        
-        var result = runner.Run(selected, reference, frames);
+                var algorithmName = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[yellow]Choose Algorithm[/]")
+                        .PageSize(10)
+                        .AddChoices(algorithms.Select(a => a.Name)));
 
-        new SimulationViewer().Show(
-            result,
-            reference);
+                var selected = algorithms.First(a => a.Name == algorithmName);
+                var result = new SimulationRunner().Run(selected, reference, frames);
+
+                new SimulationViewer().Show(result, reference);
+            }
+
+            bool again = AnsiConsole.Confirm("[cyan]Run another simulation?[/]", true);
+            if (!again) return;
+        }
     }
 
 }
