@@ -62,7 +62,7 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
                 IsPageFault = pageFault,
                 ReplacedPage = replacedPage,
                 Frames = FrameSnapshot.CreateFrameSnapshot(frames, frameCount),
-                ReferenceBits = [.. referenceBits],
+                ReferenceBits = [..referenceBits],
                 ClockPointer = pointer
             });
         }

@@ -11,4 +11,8 @@
       <ProjectReference Include="..\PRA.Core\PRA.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Spectre.Console" Version="0.57.3-alpha.0.1" />
+    </ItemGroup>
+
 </Project>
