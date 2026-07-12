@@ -1,6 +1,7 @@
 ﻿// CompareViewer.cs
 
 using PRA.CLI.Components;
+using PRA.CLI.Input;
 using PRA.CLI.Screens;
 using PRA.CLI.Services;
 using PRA.Core.Models;
@@ -80,10 +81,28 @@ public class CompareViewer {
 
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[yellow]Step through which algorithm?[/]")
-                    .AddChoices(results.Select(r => r.AlgorithmName).Append("[grey]Back[/]")));
+                    .Title("[yellow]What next?[/]")
+                    .AddChoices(
+                        results.Select(r => r.AlgorithmName)
+                            .Append("Export comparison")
+                            .Append("[grey]Back[/]")));
 
             if (choice == "[grey]Back[/]") return;
+
+            if (choice == "Export comparison") {
+                string csv = ExportService.ComparisonToCsv(results, referenceString);
+                string md = ExportService.ComparisonToMarkdown(results, referenceString);
+
+                string? path = ExportPrompt.Run("comparison", csv, md);
+
+                AnsiConsole.MarkupLine(path is not null
+                    ? $"[green]Saved to[/] {path}"
+                    : "[grey]Export cancelled.[/]");
+
+                AnsiConsole.MarkupLine("[grey]Press any key to continue...[/]");
+                Console.ReadKey(true);
+                continue;
+            }
 
             var selected = results.First(r => r.AlgorithmName == choice);
             new SimulationViewer().Show(selected, referenceString);

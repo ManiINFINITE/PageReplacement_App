@@ -1,4 +1,6 @@
 ﻿using PRA.CLI.Components;
+using PRA.CLI.Input;
+using PRA.CLI.Services;
 using PRA.Core.Models;
 using Spectre.Console;
 using Spectre.Console.Rendering;
@@ -26,6 +28,24 @@ public class SimulationViewer {
                 case ConsoleKey.LeftArrow:
                     if (currentStep > 0) currentStep--;
                     break;
+                case ConsoleKey.E: {
+                    string csv = ExportService.ToCsv(result, referenceString);
+                    string md = ExportService.ToMarkdown(result, referenceString);
+                    string safeName = result.AlgorithmName.Replace(" ", "_").Replace("(", "").Replace(")", "");
+
+                    string? path = ExportPrompt.Run(safeName, csv, md);
+
+                    AnsiConsole.Clear();
+
+                    if (path is not null)
+                        AnsiConsole.MarkupLine($"[green]Saved to[/] {path}");
+                    else
+                        AnsiConsole.MarkupLine("[grey]Export cancelled.[/]");
+
+                    AnsiConsole.MarkupLine("[grey]Press aby key to continue...[/]");
+                    Console.ReadKey(true);
+                    break;
+                }
                 case ConsoleKey.Home: currentStep = 0; break;
                 case ConsoleKey.End: currentStep = result.Steps.Count - 1; break;
                 case ConsoleKey.T: _showOverview = !_showOverview; break;

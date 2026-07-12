@@ -10,6 +10,7 @@ public static class Footer {
             "[grey]←/→[/] Step   " +
             "[grey]Home/End[/] Jump   " +
             "[grey]T[/] Toggle history   " +
+            "[grey]E[/] Export   " +
             "[grey]Esc[/] Back");
 
         return new Rows(
