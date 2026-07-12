@@ -1,22 +1,25 @@
-﻿using PRA.Core.Helpers;
+﻿using PRA.Core.Interfaces;
 using PRA.Core.Models;
+using PRA.Core.Utilities;
 
 namespace PRA.Core.Algorithms;
 
-public class FifoAlgorithm {
+public class FifoAlgorithm : IPageReplacementAlgorithm {
 
-    public SimulationResult Run(IReadOnlyList<int> reference, int frameCount) {
+    public string Name => "FIFO";
+
+    public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount) {
         var result = new SimulationResult {
             AlgorithmName = "FIFO"
         };
 
-        if (frameCount <= 0 || reference.Count == 0)
+        if (frameCount <= 0 || referenceString.Count == 0)
             return result;
 
         var frames = new List<int>();
         var queue = new Queue<int>();
 
-        foreach (var page in reference) {
+        foreach (var page in referenceString) {
             bool pageFault = false;
             int? replacedPage = null;
 
@@ -44,7 +47,7 @@ public class FifoAlgorithm {
                 CurrentPage = page,
                 IsPageFault = pageFault,
                 ReplacedPage = replacedPage,
-                Frames = SimulationHelper.CreateFrameSnapshot(frames, frameCount)
+                Frames = FrameSnapshot.CreateFrameSnapshot(frames, frameCount)
             });
         }
 

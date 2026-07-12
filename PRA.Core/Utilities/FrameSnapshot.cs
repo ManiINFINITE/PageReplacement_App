@@ -1,6 +1,6 @@
-﻿namespace PRA.Core.Helpers;
+﻿namespace PRA.Core.Utilities;
 
-public static class SimulationHelper {
+public static class FrameSnapshot {
 
     public static List<int?> CreateFrameSnapshot(List<int> frames, int frameCount) {
         var snapshot = new List<int?>(frameCount);
