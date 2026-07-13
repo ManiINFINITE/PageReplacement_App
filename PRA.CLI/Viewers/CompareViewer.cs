@@ -1,6 +1,4 @@
-﻿// CompareViewer.cs
-
-using PRA.CLI.Components;
+﻿using PRA.CLI.Components;
 using PRA.CLI.Input;
 using PRA.CLI.Screens;
 using PRA.CLI.Services;
@@ -20,7 +18,6 @@ public class CompareViewer {
         var runner = new SimulationRunner();
         var algorithms = AlgorithmFactory.GetAlgorithms();
 
-        // Assign colors against the STABLE, unsorted algorithm list, once.
         var colorByAlgorithm = algorithms
             .Select((a, i) => (a.Name, Color: Palette[i % Palette.Length]))
             .ToDictionary(x => x.Name, x => x.Color);
@@ -35,32 +32,31 @@ public class CompareViewer {
             Header.Draw();
 
             AnsiConsole.Write(Align.Center(new Markup(
-                $"[grey]Reference:[/] {string.Join(' ', referenceString)}   " +
-                $"[grey]Frames:[/] {frameCount}")));
+                $"{Theme.Dim("Reference:")} {string.Join(' ', referenceString)}   " +
+                $"{Theme.Dim("Frames:")} {frameCount}")));
 
             AnsiConsole.WriteLine();
             AnsiConsole.WriteLine();
             AnsiConsole.WriteLine();
 
             var table = new Table()
-                .Border(TableBorder.Rounded)
+                .Border(TableBorder.Double)
+                .BorderStyle(Theme.BorderStyle)
                 .Expand()
-                .Title("[bold cornflowerblue]RESULTS[/]"); // Title() takes (string, Style?) — no Justify overload; it's centered over the table by default anyway
+                .Title(Theme.Bold("RESULTS"));
 
-            table.AddColumn(new TableColumn("[bold]Algorithm[/]"));
-            table.AddColumn(new TableColumn("[bold]Hits[/]").Centered());
-            table.AddColumn(new TableColumn("[bold]Faults[/]").Centered());
-            table.AddColumn(new TableColumn("[bold]Hit Ratio[/]").Centered());
+            table.AddColumn(new TableColumn(Theme.Bold("Algorithm")));
+            table.AddColumn(new TableColumn(Theme.Bold("Hits")).Centered());
+            table.AddColumn(new TableColumn(Theme.Bold("Faults")).Centered());
+            table.AddColumn(new TableColumn(Theme.Bold("Hit Ratio")).Centered());
 
             foreach (var r in results) {
                 var swatch = colorByAlgorithm[r.AlgorithmName];
 
-                // AddRow needs every argument to be the SAME type — all IRenderable or all string.
-                // Align implements IRenderable, so make the first cell a Markup too, not a raw string.
                 table.AddRow(
                     new Markup($"[{swatch.ToMarkup()}]■[/] {r.AlgorithmName}"),
-                    Align.Center(new Markup($"[green]{r.PageHits}[/]")),
-                    Align.Center(new Markup($"[red]{r.PageFaults}[/]")),
+                    Align.Center(new Markup(Theme.Hit(r.PageHits.ToString()))),
+                    Align.Center(new Markup(Theme.Fault(r.PageFaults.ToString()))),
                     Align.Center(new Markup($"{r.HitRatio:P0}"))
                 );
             }
@@ -81,7 +77,7 @@ public class CompareViewer {
 
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[yellow]What next?[/]")
+                    .Title(Theme.Warn("What next?"))
                     .AddChoices(
                         results.Select(r => r.AlgorithmName)
                             .Append("Export comparison")
@@ -96,10 +92,10 @@ public class CompareViewer {
                 string? path = ExportPrompt.Run("comparison", csv, md);
 
                 AnsiConsole.MarkupLine(path is not null
-                    ? $"[green]Saved to[/] {path}"
-                    : "[grey]Export cancelled.[/]");
+                    ? $"{Theme.Hit("Saved to")} {path}"
+                    : Theme.Dim("Export cancelled."));
 
-                AnsiConsole.MarkupLine("[grey]Press any key to continue...[/]");
+                AnsiConsole.MarkupLine(Theme.Dim("Press any key to continue..."));
                 Console.ReadKey(true);
                 continue;
             }

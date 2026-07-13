@@ -1,5 +1,5 @@
-﻿using PRA.Core.Utilities;
-using Spectre.Console;
+﻿using PRA.CLI.Components;
+using PRA.Core.Utilities;
 
 namespace PRA.CLI.Input;
 
@@ -7,24 +7,27 @@ public static class UserInput {
 
     public static List<int> ReadReferenceString() {
         while (true) {
-            string input = AnsiConsole.Ask<string>("[cyan]Reference String[/]");
+            string input = BorderedInput.Show(
+                "Reference String",
+                placeholder: "e.g. 7 0 1 2 0 3 0 4 2 3 0 3 2");
 
             try {
-                return ListConverter.ConvertToIntArray(input);
+                var list = ListConverter.ConvertToIntArray(input);
+                if (list.Count > 0) return list;
             } catch {
-                AnsiConsole.MarkupLine("[red]Invalid reference string.[/]");
+                // loop and retry — BorderedInput re-shows on Enter with empty validate result otherwise
             }
         }
     }
 
     public static int ReadFrameCount() {
-        while (true) {
-            int value = AnsiConsole.Ask<int>("[cyan]Frame Count[/]");
+        string input = BorderedInput.Show(
+            "Frame Count",
+            placeholder: "e.g. 3",
+            validate: s => int.TryParse(s, out int v) && v > 0,
+            errorMessage: "Frame count must be a positive integer.");
 
-            if (value > 0) return value;
-
-            AnsiConsole.MarkupLine("[red]Frame count must be greater than zero.[/]");
-        }
+        return int.Parse(input);
     }
 
 }

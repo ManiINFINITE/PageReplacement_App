@@ -2,7 +2,6 @@
 using PRA.CLI.Input;
 using PRA.CLI.Services;
 using PRA.CLI.Viewers;
-using Spectre.Console;
 
 namespace PRA.CLI.Screens;
 
@@ -10,39 +9,35 @@ public class MainMenu {
 
     public void Show() {
         while (true) {
-            AnsiConsole.Clear();
-            Header.Draw();
+            string choice = BorderedMenu.Show("Main Menu",
+            [
+                "New single simulation",
+                "Compare all algorithms",
+                "Compare two algorithms",
+                "Close app"
+            ]);
+
+            if (choice == "Close app") return;
 
             List<int> reference = UserInput.ReadReferenceString();
             int frames = UserInput.ReadFrameCount();
 
-            string mode = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow]What do you want to do?[/]")
-                    .AddChoices(
-                        "Run a single algorithm",
-                        "Compare all algorithms",
-                        "Compare two algorithms side by side"
-                    ));
-
             var algorithms = AlgorithmFactory.GetAlgorithms();
             var runner = new SimulationRunner();
 
-            switch (mode) {
+            switch (choice) {
                 case "Compare all algorithms":
                     new CompareViewer().Show(reference, frames);
                     break;
 
-                case "Compare two algorithms side by side": {
-                    var firstName = AnsiConsole.Prompt(
-                        new SelectionPrompt<string>()
-                            .Title("[yellow]Choose first algorithm[/]")
-                            .AddChoices(algorithms.Select(a => a.Name)));
+                case "Compare two algorithms": {
+                    string firstName = BorderedMenu.Show(
+                        "Choose first algorithm",
+                        algorithms.Select(a => a.Name).ToList());
 
-                    var secondName = AnsiConsole.Prompt(
-                        new SelectionPrompt<string>()
-                            .Title("[yellow]Choose second algorithm[/]")
-                            .AddChoices(algorithms.Select(a => a.Name).Where(n => n != firstName)));
+                    string secondName = BorderedMenu.Show(
+                        "Choose second algorithm",
+                        algorithms.Select(a => a.Name).Where(n => n != firstName).ToList());
 
                     var algoA = algorithms.First(a => a.Name == firstName);
                     var algoB = algorithms.First(a => a.Name == secondName);
@@ -55,11 +50,9 @@ public class MainMenu {
                 }
 
                 default: {
-                    var algorithmName = AnsiConsole.Prompt(
-                        new SelectionPrompt<string>()
-                            .Title("[yellow]Choose Algorithm[/]")
-                            .PageSize(10)
-                            .AddChoices(algorithms.Select(a => a.Name)));
+                    string algorithmName = BorderedMenu.Show(
+                        "Choose algorithm",
+                        algorithms.Select(a => a.Name).ToList());
 
                     var selected = algorithms.First(a => a.Name == algorithmName);
                     var result = runner.Run(selected, reference, frames);

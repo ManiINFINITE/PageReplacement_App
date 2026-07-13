@@ -2,4 +2,5 @@
 
 Console.Title = "Page Replacement Algorithm Simulator";
 
+new TitleScreen().Show();
 new MainMenu().Show();

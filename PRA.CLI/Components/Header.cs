@@ -6,9 +6,9 @@ public static class Header {
 
     public static void Draw() {
         AnsiConsole.Write(
-            new Rule("[bold cornflowerblue]PAGE REPLACEMENT SIMULATOR[/]")
+            new Rule(Theme.Bold("PAGE REPLACEMENT ALGORITHM SIMULATOR"))
                 .Centered()
-                .RuleStyle(Theme.Accent));
+                .RuleStyle(Theme.BorderStyle));
     }
 
 }

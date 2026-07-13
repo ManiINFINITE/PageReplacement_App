@@ -27,12 +27,12 @@ public static class ReferencePanel {
             sb.Append(' ');
         }
 
-        // ReferencePanel.cs
         return new Panel(Align.Center(new Markup(sb.ToString()))) {
-            Header = new PanelHeader("REFERENCE STRING", Justify.Center),
-            Border = BoxBorder.Rounded,
+            Header = new PanelHeader(Theme.Bold("REFERENCE STRING"), Justify.Center),
+            Border = Theme.Border,
+            BorderStyle = Theme.BorderStyle,
             Expand = true,
-            Padding = new Padding(2, 0, 2, 1)
+            Padding = new Padding(2, 1, 2, 1)
         };
     }
 

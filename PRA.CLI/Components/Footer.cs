@@ -7,24 +7,24 @@ public static class Footer {
 
     public static IRenderable Build() {
         var keys = new Markup(
-            "[grey]←/→[/] Step   " +
-            "[grey]Home/End[/] Jump   " +
-            "[grey]T[/] Toggle history   " +
-            "[grey]E[/] Export   " +
-            "[grey]Esc[/] Back");
+            $"{Theme.Dim("←/→")} Step   " +
+            $"{Theme.Dim("Home/End")} Jump   " +
+            $"{Theme.Dim("T")} Toggle history   " +
+            $"{Theme.Dim("E")} Export   " +
+            $"{Theme.Accent("Esc")} Back");
 
         return new Rows(
-            new Rule().RuleStyle(Theme.Muted),
+            new Rule().RuleStyle(Theme.BorderStyle),
             Align.Center(keys)
         );
     }
 
-    // Kept for screens outside the Layout (menus, compare table) that just want to print inline.
     public static void Draw() {
-        AnsiConsole.Write(new Rule().RuleStyle(Theme.Muted));
+        AnsiConsole.Write(new Rule().RuleStyle(Theme.BorderStyle));
 
         AnsiConsole.MarkupLine(
-            "[grey]← Previous[/]    [grey]→ Next[/]    [grey]Home[/]    [grey]End[/]    [red]Esc Exit[/]");
+            $"{Theme.Dim("← Previous")}    {Theme.Dim("→ Next")}    " +
+            $"{Theme.Dim("Home")}    {Theme.Dim("End")}    {Theme.Accent("Esc Exit")}");
     }
 
 }
