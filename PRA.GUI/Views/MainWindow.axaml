@@ -6,13 +6,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PRA.GUI.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="PRA.GUI">
+        Icon="/Assets/Icons/icon.png"
+        Title="Page Replacement Simulator">
 
     <Design.DataContext>
         <viewModels:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
 </Window>
