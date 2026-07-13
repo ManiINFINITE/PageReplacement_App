@@ -13,6 +13,7 @@
         <StyleInclude Source="avares://PRA.GUI/Styles/BordersStyles.axaml"/>
         <StyleInclude Source="avares://PRA.GUI/Styles/TextBlocksStyles.axaml"/>
         <StyleInclude Source="avares://PRA.GUI/Styles/ButtonsStyles.axaml"/>
+        <StyleInclude Source="avares://PRA.GUI/Styles/InputsStyles.axaml"/>
     </Application.Styles>
 
     <Application.Resources>

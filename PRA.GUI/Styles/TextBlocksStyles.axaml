@@ -69,4 +69,10 @@
         <Setter Property="Foreground" Value="{DynamicResource BRUSH_Crimson}"/>
     </Style>
 
+    <Style Selector="TextBlock.ErrorText">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-SemiBold}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_Crimson}"/>
+    </Style>
+
 </Styles>

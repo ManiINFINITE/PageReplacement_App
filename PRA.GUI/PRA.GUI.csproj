@@ -5,10 +5,10 @@
         <Nullable>enable</Nullable>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <ImplicitUsings>disable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 
@@ -26,5 +26,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PRA.Core\PRA.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\MainWindowView.axaml.cs">
+        <DependentUpon>MainWindow.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

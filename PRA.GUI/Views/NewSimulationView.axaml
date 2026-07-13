@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:PRA.GUI.ViewModels"
+             xmlns:converters="clr-namespace:PRA.GUI.Converters"
+             xmlns:interfaces="clr-namespace:PRA.Core.Interfaces;assembly=PRA.Core"
+             x:Class="PRA.GUI.Views.NewSimulationView"
+             x:DataType="viewModels:NewSimulationViewModel">
+
+    <Border Classes="OverlayCard" Width="440" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Spacing="20">
+
+            <StackPanel Spacing="4">
+                <TextBlock Text="New Simulation" Classes="H1"/>
+                <TextBlock Text="Enter a reference string and how many frames to simulate." Classes="Body"/>
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="REFERENCE STRING" Classes="CardTitle"/>
+                <TextBox Text="{Binding ReferenceStringInput}"
+                         PlaceholderText="e.g. 7 0 1 2 0 3 0 4 2 3 0 3 2"
+                         Classes.Error="{Binding ReferenceStringError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+                <TextBlock Text="{Binding ReferenceStringError}" Classes="ErrorText"
+                           IsVisible="{Binding ReferenceStringError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="FRAME COUNT" Classes="CardTitle"/>
+                <TextBox Text="{Binding FrameCountInput}"
+                         PlaceholderText="e.g. 3"
+                         Classes.Error="{Binding FrameCountError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+                <TextBlock Text="{Binding FrameCountError}" Classes="ErrorText"
+                           IsVisible="{Binding FrameCountError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+            </StackPanel>
+            
+            <StackPanel Spacing="6">
+                <TextBlock Text="ALGORITHM" Classes="CardTitle"/>
+                <ComboBox ItemsSource="{Binding Algorithms}" SelectedItem="{Binding SelectedAlgorithm}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="interfaces:IPageReplacementAlgorithm">
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Right">
+                <Button Classes="Secondary" Content="Cancel" Command="{Binding CancelCommand}"/>
+                <Button Classes="Primary" Content="Start Simulation" Command="{Binding StartCommand}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Border>
+
+</UserControl>

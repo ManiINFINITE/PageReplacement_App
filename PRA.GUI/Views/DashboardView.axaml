@@ -1,0 +1,175 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PRA.GUI.ViewModels"
+             xmlns:views="clr-namespace:PRA.GUI.Views"
+             mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="900"
+             x:Class="PRA.GUI.Views.DashboardView"
+             x:DataType="viewModels:DashboardViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,28">
+            <StackPanel Grid.Column="0" Spacing="4">
+                <TextBlock Text="Simulation Dashboard" Classes="H1"/>
+                <TextBlock Text="{Binding ReferenceStringLabel}" Classes="Body"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <Button Classes="Secondary" Content="Export"/>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="20">
+
+            <!-- Stat cards -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*" ColumnSpacing="20">
+
+                <Border Grid.Column="0" Classes="Card Elevated">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="STEP" Classes="StatLabel"/>
+                        <TextBlock Text="{Binding StepLabel}" Classes="StatValue"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Classes="Card Elevated">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="HITS" Classes="StatLabel"/>
+                        <TextBlock Text="{Binding Hits}" Classes="StatValue Success"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Classes="Card Elevated">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="FAULTS" Classes="StatLabel"/>
+                        <TextBlock Text="{Binding Faults}" Classes="StatValue Danger"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Classes="Card Accent Elevated">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="HIT RATIO" Classes="StatLabel" Foreground="{StaticResource BRUSH_SmokyBlack}" Opacity="0.8"/>
+                        <TextBlock Text="{Binding HitRatioLabel}" Classes="StatValue" Foreground="{StaticResource BRUSH_SmokyBlack}"/>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+            <!-- Reference string strip -->
+            <Border Grid.Row="1" Classes="Card">
+                <StackPanel Spacing="14">
+                    <TextBlock Text="REFERENCE STRING" Classes="CardTitle"/>
+                    <ItemsControl ItemsSource="{Binding ReferenceTokens}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:ReferenceTokenViewModel">
+                                <Border Classes="RefToken"
+                                        Classes.Current="{Binding IsCurrent}"
+                                        Classes.Hit="{Binding IsHit}"
+                                        Classes.Fault="{Binding IsFault}">
+                                    <TextBlock Text="{Binding Value}" Classes="Mono" FontSize="14"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- Frames + playback + history -->
+            <Grid Grid.Row="2" ColumnDefinitions="*,340" ColumnSpacing="20">
+
+                <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="20">
+
+                    <Border Grid.Row="0" Classes="Card Elevated">
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="18">
+                            <TextBlock Grid.Row="0" Text="FRAME STATE" Classes="CardTitle"/>
+
+                            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <ItemsControl ItemsSource="{Binding Frames}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="16"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="viewModels:FrameViewModel">
+                                            <StackPanel Spacing="8" HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding Label}" Classes="Caption" HorizontalAlignment="Center"/>
+                                                <Border Classes="FrameSlot"
+                                                        Classes.Hit="{Binding IsHit}"
+                                                        Classes.Fault="{Binding IsFault}"
+                                                        Classes.Replaced="{Binding IsReplaced}">
+                                                    <TextBlock Text="{Binding Value}" Classes="H2"
+                                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                <Border Classes="Pill Success">
+                                    <TextBlock Text="● Hit" Classes="Caption" Foreground="{StaticResource BRUSH_MintGreen}"/>
+                                </Border>
+                                <Border Classes="Pill Danger">
+                                    <TextBlock Text="● Fault" Classes="Caption" Foreground="{StaticResource BRUSH_Crimson}"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1" Classes="Card Elevated">
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="14">
+                            <TextBlock Grid.Row="0" Text="HISTORY" Classes="CardTitle"/>
+                            <views:HistoryGrid Grid.Row="1" Rows="{Binding HistoryRows}"/>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+
+                <!-- Right rail: playback -->
+                <Border Grid.Column="1" Classes="Card Elevated">
+                    <StackPanel Spacing="24">
+                        <TextBlock Text="PLAYBACK" Classes="CardTitle"/>
+
+                        <StackPanel HorizontalAlignment="Center" Spacing="16">
+                            <TextBlock Text="{Binding CurrentPageLabel}" Classes="StatValue" HorizontalAlignment="Center"/>
+                            <Border Classes="Pill"
+                                    Classes.Success="{Binding IsHitStep}"
+                                    Classes.Danger="{Binding IsFaultStep}">
+                                <TextBlock Text="{Binding ResultLabel}" Classes="H3" HorizontalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+
+                        <Border Classes="Divider"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+                            <Button Classes="StepControl" Content="&#8592;" Command="{Binding PreviousStepCommand}"/>
+                            <Button Classes="StepControl" Content="&#8594;" Command="{Binding NextStepCommand}"/>
+                        </StackPanel>
+
+                        <Border Classes="Divider"/>
+
+                        <StackPanel Spacing="10">
+                            <Button Classes="Secondary" Content="Jump to Start" HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center" Command="{Binding JumpToStartCommand}"/>
+                            <Button Classes="Secondary" Content="Jump to End" HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center" Command="{Binding JumpToEndCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+        </Grid>
+        </ScrollViewer>
+    </Grid>
+
+</UserControl>

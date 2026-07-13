@@ -107,4 +107,19 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}"/>
     </Style>
 
+    <!-- Modal scrim (dims everything behind an overlay) -->
+    <Style Selector="Border.Scrim">
+        <Setter Property="Background" Value="#B3141615"/>
+    </Style>
+
+    <!-- Modal card shown on top of the scrim -->
+    <Style Selector="Border.OverlayCard">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+        <Setter Property="CornerRadius" Value="18"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
+        <Setter Property="BoxShadow" Value="0 16 48 0 #60000000"/>
+        <Setter Property="Padding" Value="28"/>
+    </Style>
+
 </Styles>
