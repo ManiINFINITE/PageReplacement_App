@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:PRA.GUI.ViewModels"
+             xmlns:views="clr-namespace:PRA.GUI.Views"
+             x:Class="PRA.GUI.Views.HistoryGrid"
+             x:Name="Root">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+        <ItemsControl ItemsSource="{Binding Rows, ElementName=Root}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:HistoryRowViewModel">
+                    <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,3">
+                        <TextBlock Text="{Binding Label}" Classes="Caption" Width="28" VerticalAlignment="Center"/>
+
+                        <ItemsControl ItemsSource="{Binding Cells}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="6"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:HistoryCellViewModel">
+                                    <Border Classes="HistoryCell"
+                                            Classes.Fault="{Binding IsFault}"
+                                            Classes.Current="{Binding IsCurrentStep}"
+                                            Width="34" Height="34">
+                                        <TextBlock Text="{Binding Value}" FontSize="12"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+
+</UserControl>

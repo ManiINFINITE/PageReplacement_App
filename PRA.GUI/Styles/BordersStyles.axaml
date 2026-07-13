@@ -1,0 +1,109 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Base dashboard card -->
+    <Style Selector="Border.Card">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+        <Setter Property="CornerRadius" Value="18"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
+    </Style>
+
+    <Style Selector="Border.Card.Elevated">
+        <Setter Property="BoxShadow" Value="0 8 24 0 #40000000"/>
+    </Style>
+
+    <Style Selector="Border.Card.Accent">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}"/>
+    </Style>
+
+    <!-- Sidebar -->
+    <Style Selector="Border.Sidebar">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_SmokyBlack}"/>
+        <Setter Property="Padding" Value="16"/>
+    </Style>
+
+    <!-- Frame slot -->
+    <Style Selector="Border.FrameSlot">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
+        <Setter Property="Width" Value="64"/>
+        <Setter Property="Height" Value="64"/>
+    </Style>
+
+    <Style Selector="Border.FrameSlot.Hit">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_MintGreen}"/>
+    </Style>
+
+    <Style Selector="Border.FrameSlot.Fault">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Crimson}"/>
+    </Style>
+
+    <Style Selector="Border.FrameSlot.Replaced">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_AmberMuted}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Amber}"/>
+    </Style>
+
+    <!-- Reference string token -->
+    <Style Selector="Border.RefToken">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="Margin" Value="3,0"/>
+    </Style>
+
+    <Style Selector="Border.RefToken.Current">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
+    </Style>
+
+    <Style Selector="Border.RefToken.Hit">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}"/>
+    </Style>
+
+    <Style Selector="Border.RefToken.Fault">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+    </Style>
+
+    <!-- Divider -->
+    <Style Selector="Border.Divider">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="0,12"/>
+    </Style>
+
+    <!-- Badge / pill -->
+    <Style Selector="Border.Pill">
+        <Setter Property="CornerRadius" Value="999"/>
+        <Setter Property="Padding" Value="12,4"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
+    </Style>
+
+    <Style Selector="Border.Pill.Success">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}"/>
+    </Style>
+
+    <Style Selector="Border.Pill.Danger">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+    </Style>
+    
+    <Style Selector="Border.HistoryCell">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
+        <Setter Property="CornerRadius" Value="8"/>
+    </Style>
+
+    <Style Selector="Border.HistoryCell.Fault">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+    </Style>
+
+    <Style Selector="Border.HistoryCell.Current">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}"/>
+    </Style>
+
+</Styles>

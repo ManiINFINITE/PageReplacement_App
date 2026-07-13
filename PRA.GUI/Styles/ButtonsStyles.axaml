@@ -1,0 +1,101 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Button">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-SemiBold}"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1"/>
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <!-- Primary (filled accent) -->
+    <Style Selector="Button.Primary">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_SmokyBlack}"/>
+        <Setter Property="Padding" Value="20,12"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="Button.Primary:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
+        <Setter Property="Opacity" Value="0.88"/>
+    </Style>
+    <Style Selector="Button.Primary:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.97)"/>
+    </Style>
+
+    <!-- Secondary (outline) -->
+    <Style Selector="Button.Secondary">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextPrimary}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="20,12"/>
+    </Style>
+    <Style Selector="Button.Secondary:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
+    </Style>
+
+    <!-- Ghost (minimal) -->
+    <Style Selector="Button.Ghost">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="12,8"/>
+    </Style>
+    <Style Selector="Button.Ghost:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+    </Style>
+
+    <!-- Icon-only, circular -->
+    <Style Selector="Button.IconButton">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+        <Setter Property="Width" Value="44"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="CornerRadius" Value="22"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="Button.IconButton:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
+    </Style>
+
+    <!-- Sidebar nav item -->
+    <Style Selector="Button.NavItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="16,12"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0,2"/>
+    </Style>
+    <Style Selector="Button.NavItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+    </Style>
+    <Style Selector="Button.NavItem.Active">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpalMuted}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_FireOpal}"/>
+    </Style>
+
+    <!-- Step control (prev/next) -->
+    <Style Selector="Button.StepControl">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextPrimary}"/>
+        <Setter Property="Width" Value="52"/>
+        <Setter Property="Height" Value="52"/>
+        <Setter Property="CornerRadius" Value="16"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+</Styles>

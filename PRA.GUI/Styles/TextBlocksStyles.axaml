@@ -1,0 +1,72 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-Regular}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextPrimary}"/>
+    </Style>
+
+    <Style Selector="TextBlock.H1">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-ExtraBold}"/>
+        <Setter Property="FontSize" Value="32"/>
+    </Style>
+
+    <Style Selector="TextBlock.H2">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-Bold}"/>
+        <Setter Property="FontSize" Value="22"/>
+    </Style>
+
+    <Style Selector="TextBlock.H3">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-SemiBold}"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style Selector="TextBlock.CardTitle">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-Bold}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+        <Setter Property="LetterSpacing" Value="1"/>
+    </Style>
+
+    <Style Selector="TextBlock.Body">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-Regular}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+    </Style>
+
+    <Style Selector="TextBlock.Caption">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-Regular}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextDisabled}"/>
+    </Style>
+
+    <Style Selector="TextBlock.StatValue">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-ExtraBold}"/>
+        <Setter Property="FontSize" Value="40"/>
+    </Style>
+
+    <Style Selector="TextBlock.StatLabel">
+        <Setter Property="FontFamily" Value="{DynamicResource Nunito-SemiBold}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+    </Style>
+
+    <Style Selector="TextBlock.Mono">
+        <Setter Property="FontFamily" Value="Consolas,Cascadia Mono,monospace"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style Selector="TextBlock.Accent">
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_FireOpal}"/>
+    </Style>
+
+    <Style Selector="TextBlock.Success">
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_MintGreen}"/>
+    </Style>
+
+    <Style Selector="TextBlock.Danger">
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_Crimson}"/>
+    </Style>
+
+</Styles>

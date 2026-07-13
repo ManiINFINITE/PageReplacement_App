@@ -3,14 +3,210 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:PRA.GUI.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:views="clr-namespace:PRA.GUI.Views"
+        mc:Ignorable="d" d:DesignWidth="1440" d:DesignHeight="900"
         x:Class="PRA.GUI.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
+        Background="{StaticResource BRUSH_RaisinBlack}"
         Icon="/Assets/Icons/icon.png"
-        Title="Page Replacement Simulator">
+        Title="Page Replacement Simulator"
+        Width="1440" Height="900">
 
     <Design.DataContext>
         <viewModels:MainWindowViewModel/>
     </Design.DataContext>
+
+    <Grid ColumnDefinitions="240,*">
+
+        <!-- ===================== SIDEBAR ===================== -->
+        <Border Grid.Column="0" Classes="Sidebar">
+            <Grid RowDefinitions="Auto,*,Auto">
+
+                <StackPanel Grid.Row="0" Spacing="4" Margin="8,8,8,32">
+                    <TextBlock Text="PRA" Classes="H1" Foreground="{StaticResource BRUSH_FireOpal}"/>
+                    <TextBlock Text="Page Replacement Sim" Classes="Caption"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Spacing="2">
+                    <Button Classes="NavItem Active" Content="Dashboard"/>
+                    <Button Classes="NavItem" Content="Compare All"/>
+                    <Button Classes="NavItem" Content="Compare Two"/>
+                    <Border Classes="Divider"/>
+                    <Button Classes="NavItem" Content="Settings"/>
+                </StackPanel>
+
+                <Border Grid.Row="2" Classes="Card" Padding="14" Margin="0,0,0,8">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="ALGORITHM" Classes="CardTitle"/>
+                        <TextBlock Text="{Binding Dashboard.AlgorithmName}" Classes="H3" Foreground="{StaticResource BRUSH_FireOpal}"/>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+        </Border>
+
+        <!-- ===================== MAIN ===================== -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*" Margin="32">
+
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,28">
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="Simulation Dashboard" Classes="H1"/>
+                    <TextBlock Text="{Binding Dashboard.ReferenceStringLabel}" Classes="Body"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <Button Classes="Secondary" Content="Export"/>
+                    <Button Classes="Primary" Content="New Simulation"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*" RowSpacing="20">
+
+                <!-- Stat cards -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*" ColumnSpacing="20">
+
+                    <Border Grid.Column="0" Classes="Card Elevated">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="STEP" Classes="StatLabel"/>
+                            <TextBlock Text="{Binding Dashboard.StepLabel}" Classes="StatValue"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="1" Classes="Card Elevated">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="HITS" Classes="StatLabel"/>
+                            <TextBlock Text="{Binding Dashboard.Hits}" Classes="StatValue Success"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Classes="Card Elevated">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="FAULTS" Classes="StatLabel"/>
+                            <TextBlock Text="{Binding Dashboard.Faults}" Classes="StatValue Danger"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="3" Classes="Card Accent Elevated">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="HIT RATIO" Classes="StatLabel" Foreground="{StaticResource BRUSH_SmokyBlack}" Opacity="0.8"/>
+                            <TextBlock Text="{Binding Dashboard.HitRatioLabel}" Classes="StatValue" Foreground="{StaticResource BRUSH_SmokyBlack}"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+
+                <!-- Reference string strip -->
+                <Border Grid.Row="1" Classes="Card">
+                    <StackPanel Spacing="14">
+                        <TextBlock Text="REFERENCE STRING" Classes="CardTitle"/>
+                        <ItemsControl ItemsSource="{Binding Dashboard.ReferenceTokens}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="viewModels:ReferenceTokenViewModel">
+                                    <Border Classes="RefToken"
+                                            Classes.Current="{Binding IsCurrent}"
+                                            Classes.Hit="{Binding IsHit}"
+                                            Classes.Fault="{Binding IsFault}">
+                                        <TextBlock Text="{Binding Value}" Classes="Mono" FontSize="14"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- Frames + playback + history -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,340" ColumnSpacing="20">
+
+                    <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="20">
+
+                        <Border Grid.Row="0" Classes="Card Elevated">
+                            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="18">
+                                <TextBlock Grid.Row="0" Text="FRAME STATE" Classes="CardTitle"/>
+
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding Dashboard.Frames}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="16"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="viewModels:FrameViewModel">
+                                            <StackPanel Spacing="8" HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding Label}" Classes="Caption" HorizontalAlignment="Center"/>
+                                                <Border Classes="FrameSlot"
+                                                        Classes.Hit="{Binding IsHit}"
+                                                        Classes.Fault="{Binding IsFault}"
+                                                        Classes.Replaced="{Binding IsReplaced}">
+                                                    <TextBlock Text="{Binding Value}" Classes="H2"
+                                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                    <Border Classes="Pill Success">
+                                        <TextBlock Text="● Hit" Classes="Caption" Foreground="{StaticResource BRUSH_MintGreen}"/>
+                                    </Border>
+                                    <Border Classes="Pill Danger">
+                                        <TextBlock Text="● Fault" Classes="Caption" Foreground="{StaticResource BRUSH_Crimson}"/>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="1" Classes="Card Elevated">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                                <TextBlock Grid.Row="0" Text="HISTORY" Classes="CardTitle"/>
+                                <views:HistoryGrid Grid.Row="1" Rows="{Binding Dashboard.HistoryRows}"/>
+                            </Grid>
+                        </Border>
+
+                    </Grid>
+
+                    <!-- Right rail: playback -->
+                    <Border Grid.Column="1" Classes="Card Elevated">
+                        <StackPanel Spacing="24">
+                            <TextBlock Text="PLAYBACK" Classes="CardTitle"/>
+
+                            <StackPanel HorizontalAlignment="Center" Spacing="16">
+                                <TextBlock Text="{Binding Dashboard.CurrentPageLabel}" Classes="StatValue" HorizontalAlignment="Center"/>
+                                <Border Classes="Pill"
+                                        Classes.Success="{Binding Dashboard.IsHitStep}"
+                                        Classes.Danger="{Binding Dashboard.IsFaultStep}">
+                                    <TextBlock Text="{Binding Dashboard.ResultLabel}" Classes="H3" HorizontalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+
+                            <Border Classes="Divider"/>
+
+                            <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+                                <Button Classes="StepControl" Content="&#8592;" Command="{Binding Dashboard.PreviousStepCommand}"/>
+                                <Button Classes="StepControl" Content="&#8594;" Command="{Binding Dashboard.NextStepCommand}"/>
+                            </StackPanel>
+
+                            <Border Classes="Divider"/>
+
+                            <StackPanel Spacing="10">
+                                <Button Classes="Secondary" Content="Jump to Start" HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center" Command="{Binding Dashboard.JumpToStartCommand}"/>
+                                <Button Classes="Secondary" Content="Jump to End" HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center" Command="{Binding Dashboard.JumpToEndCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+    </Grid>
 
 </Window>
