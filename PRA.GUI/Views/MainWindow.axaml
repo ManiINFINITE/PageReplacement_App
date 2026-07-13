@@ -4,13 +4,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:PRA.GUI.ViewModels"
         xmlns:views="clr-namespace:PRA.GUI.Views"
-        mc:Ignorable="d" d:DesignWidth="1440" d:DesignHeight="900"
+        mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
         x:Class="PRA.GUI.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
         Background="{StaticResource BRUSH_RaisinBlack}"
         Icon="/Assets/Icons/icon.png"
         Title="Page Replacement Simulator"
-        Width="1440" Height="900">
+        Width="1440" Height="900"
+        MinWidth="1024" MinHeight="640"
+        WindowState="Maximized">
 
     <Design.DataContext>
         <viewModels:MainWindowViewModel/>
@@ -60,7 +62,8 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*" RowSpacing="20">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="20">
 
                 <!-- Stat cards -->
                 <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*" ColumnSpacing="20">
@@ -122,33 +125,35 @@
                 <!-- Frames + playback + history -->
                 <Grid Grid.Row="2" ColumnDefinitions="*,340" ColumnSpacing="20">
 
-                    <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="20">
+                    <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="20">
 
                         <Border Grid.Row="0" Classes="Card Elevated">
                             <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="18">
                                 <TextBlock Grid.Row="0" Text="FRAME STATE" Classes="CardTitle"/>
 
-                                <ItemsControl Grid.Row="1" ItemsSource="{Binding Dashboard.Frames}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" Spacing="16"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="viewModels:FrameViewModel">
-                                            <StackPanel Spacing="8" HorizontalAlignment="Center">
-                                                <TextBlock Text="{Binding Label}" Classes="Caption" HorizontalAlignment="Center"/>
-                                                <Border Classes="FrameSlot"
-                                                        Classes.Hit="{Binding IsHit}"
-                                                        Classes.Fault="{Binding IsFault}"
-                                                        Classes.Replaced="{Binding IsReplaced}">
-                                                    <TextBlock Text="{Binding Value}" Classes="H2"
-                                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Border>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                    <ItemsControl ItemsSource="{Binding Dashboard.Frames}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="16"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="viewModels:FrameViewModel">
+                                                <StackPanel Spacing="8" HorizontalAlignment="Center">
+                                                    <TextBlock Text="{Binding Label}" Classes="Caption" HorizontalAlignment="Center"/>
+                                                    <Border Classes="FrameSlot"
+                                                            Classes.Hit="{Binding IsHit}"
+                                                            Classes.Fault="{Binding IsFault}"
+                                                            Classes.Replaced="{Binding IsReplaced}">
+                                                        <TextBlock Text="{Binding Value}" Classes="H2"
+                                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
                                     <Border Classes="Pill Success">
@@ -162,7 +167,7 @@
                         </Border>
 
                         <Border Grid.Row="1" Classes="Card Elevated">
-                            <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="14">
                                 <TextBlock Grid.Row="0" Text="HISTORY" Classes="CardTitle"/>
                                 <views:HistoryGrid Grid.Row="1" Rows="{Binding Dashboard.HistoryRows}"/>
                             </Grid>
@@ -205,6 +210,7 @@
                 </Grid>
 
             </Grid>
+            </ScrollViewer>
         </Grid>
 
     </Grid>
