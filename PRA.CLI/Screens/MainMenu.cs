@@ -14,10 +14,16 @@ public class MainMenu {
                 "New single simulation",
                 "Compare all algorithms",
                 "Compare two algorithms",
+                "Settings",
                 "Close app"
             ]);
 
             if (choice == "Close app") return;
+
+            if (choice == "Settings") {
+                new SettingsScreen().Show();
+                continue;
+            }
 
             List<int> reference = UserInput.ReadReferenceString();
             int frames = UserInput.ReadFrameCount();

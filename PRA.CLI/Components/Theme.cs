@@ -4,30 +4,40 @@ namespace PRA.CLI.Components;
 
 public static class Theme {
 
-    // Change this one line to re-theme the entire app.
-    public const string PrimaryName = "DodgerBlue1";
-
-    public static Color ColorFromName(string name) {
-        return Style.Parse(name).Foreground;
-    }
-
-    public readonly static Color HitColor = ColorFromName(HitName);
-    public readonly static Color FaultColor = ColorFromName(FaultName);
-    public readonly static Color WarnColor = ColorFromName(WarnName);
-    public readonly static Color PrimaryColor = ColorFromName(PrimaryName);
+    public static string PrimaryName { get; private set; } = "green3";
 
     public const string DimName = "grey";
-    public const string HitName = "green3";
     public const string FaultName = "red3";
     public const string WarnName = "gold1";
 
-    public readonly static Style BorderStyle = Style.Parse(PrimaryName);
+    public readonly static (string Name, string Swatch)[] AvailableColors = [
+        ("green3", "green3"),
+        ("DodgerBlue1", "DodgerBlue1"),
+        ("orange1", "orange1"),
+        ("mediumpurple2", "mediumpurple2"),
+        ("gold1", "gold1"),
+        ("red3", "red3"),
+        ("aqua", "aqua"),
+        ("hotpink", "hotpink"),
+        ("lightgoldenrod1", "lightgoldenrod1"),
+        ("white", "white")
+    ];
 
-    public const string HitTag = HitName;
-    public const string FaultTag = FaultName;
-    public const string CurrentTag = "black on " + PrimaryName;
-    public const string ReplacedTag = "black on " + WarnName;
-    public const string DimTag = DimName;
+    public static void SetPrimary(string colorName) {
+        PrimaryName = colorName;
+    }
+
+    public static Style BorderStyle => Style.Parse(PrimaryName);
+    public static Color PrimaryColor => Style.Parse(PrimaryName).Foreground;
+    public static Color FaultColor => Style.Parse(FaultName).Foreground;
+    public static Color WarnColor => Style.Parse(WarnName).Foreground;
+    public static Color HitColor => PrimaryColor;
+
+    public static string HitTag => PrimaryName;
+    public static string FaultTag => FaultName;
+    public static string CurrentTag => $"black on {PrimaryName}";
+    public static string ReplacedTag => $"black on {WarnName}";
+    public static string DimTag => DimName;
 
     public static string Bold(string text) {
         return $"[bold {PrimaryName}]{text}[/]";
@@ -46,7 +56,7 @@ public static class Theme {
     }
 
     public static string Hit(string text) {
-        return $"[{HitName}]{text}[/]";
+        return $"[{PrimaryName}]{text}[/]";
     }
 
     public static string Warn(string text) {
