@@ -70,9 +70,9 @@
             <ContentControl Content="{Binding Navigation.CurrentViewModel}"/>
         </Grid>
 
-        <!-- ===================== NEW SIMULATION OVERLAY ===================== -->
-        <Border Grid.Column="0" Grid.ColumnSpan="2" Classes="Scrim" IsVisible="{Binding IsOverlayVisible}">
-            <ContentControl Content="{Binding OverlayViewModel}"/>
+        <!-- ===================== OVERLAY ===================== -->
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Classes="Scrim" IsVisible="{Binding Overlay.IsVisible}">
+            <ContentControl Content="{Binding Overlay.CurrentViewModel}"/>
         </Border>
 
     </Grid>

@@ -14,6 +14,7 @@
         <StyleInclude Source="avares://PRA.GUI/Styles/TextBlocksStyles.axaml"/>
         <StyleInclude Source="avares://PRA.GUI/Styles/ButtonsStyles.axaml"/>
         <StyleInclude Source="avares://PRA.GUI/Styles/InputsStyles.axaml"/>
+        <StyleInclude Source="avares://PRA.GUI/Styles/ProgressStyles.axaml"/>
     </Application.Styles>
 
     <Application.Resources>

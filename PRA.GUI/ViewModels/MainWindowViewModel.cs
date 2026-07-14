@@ -9,21 +9,21 @@ namespace PRA.GUI.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase {
 
-    // Same algorithm that's currently on the Dashboard — reused whenever a
-    // new simulation is started from the overlay (no algorithm picker yet).
+    // Whatever's currently on the Dashboard — preselected in the New
+    // Simulation overlay and reassignable once the user picks a different
+    // algorithm there.
     private IPageReplacementAlgorithm _algorithm = new FifoAlgorithm();
 
     public INavigationService Navigation { get; }
+
+    // Shared with page view-models (Compare All, etc.) so they can pop their
+    // own overlays without needing a reference back to the shell.
+    public IOverlayService Overlay { get; }
 
     // Kept as a standalone property (rather than only living inside the
     // navigation cache) because the sidebar's "ALGORITHM" card shows it
     // regardless of which page is currently active.
     [ObservableProperty] private DashboardViewModel dashboard;
-
-    // Null when no overlay is open. Bind a ContentControl to this in the shell.
-    [ObservableProperty] private ViewModelBase? overlayViewModel;
-
-    public bool IsOverlayVisible => OverlayViewModel is not null;
 
     public IRelayCommand OpenNewSimulationCommand { get; }
 
@@ -35,9 +35,11 @@ public partial class MainWindowViewModel : ViewModelBase {
 
         dashboard = new DashboardViewModel(result, reference);
 
+        Overlay = new OverlayService();
+
         Navigation = new NavigationService();
         Navigation.Register(AppPage.Dashboard, () => Dashboard);
-        Navigation.Register(AppPage.CompareAll, () => new CompareAllViewModel());
+        Navigation.Register(AppPage.CompareAll, () => new CompareAllViewModel(Overlay));
         Navigation.Register(AppPage.CompareTwo, () => new CompareTwoViewModel());
         Navigation.Register(AppPage.Settings, () => new SettingsViewModel());
 
@@ -46,25 +48,21 @@ public partial class MainWindowViewModel : ViewModelBase {
         OpenNewSimulationCommand = new RelayCommand(OpenNewSimulation);
     }
 
-    partial void OnOverlayViewModelChanged(ViewModelBase? value) => OnPropertyChanged(nameof(IsOverlayVisible));
-
     private void OpenNewSimulation() {
-        OverlayViewModel = new NewSimulationViewModel(_algorithm, StartNewSimulation, CloseOverlay);
-    }
-
-    private void CloseOverlay() {
-        OverlayViewModel = null;
+        Overlay.Open(new NewSimulationViewModel(_algorithm, StartNewSimulation, Overlay.Close));
     }
 
     private void StartNewSimulation(List<int> referenceString, int frameCount, IPageReplacementAlgorithm algorithm) {
         _algorithm = algorithm;
+
         var result = _algorithm.Run(referenceString, frameCount);
         Dashboard = new DashboardViewModel(result, referenceString);
 
+        // Re-point the Dashboard page at the fresh view-model and jump there.
         Navigation.Register(AppPage.Dashboard, () => Dashboard, cache: false);
         Navigation.NavigateTo(AppPage.Dashboard);
 
-        CloseOverlay();
+        Overlay.Close();
     }
 
 }

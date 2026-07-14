@@ -1,14 +1,72 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PRA.GUI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
              x:Class="PRA.GUI.Views.CompareAllView"
              x:DataType="viewModels:CompareAllViewModel">
 
-    <Border Classes="Card Elevated" VerticalAlignment="Top" Padding="24">
-        <StackPanel Spacing="8">
-            <TextBlock Text="{Binding Title}" Classes="H1"/>
-            <TextBlock Text="{Binding Description}" Classes="Body"/>
-        </StackPanel>
-    </Border>
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,28">
+            <StackPanel Grid.Column="0" Spacing="4">
+                <TextBlock Text="Compare All" Classes="H1"/>
+                <TextBlock Text="{Binding ResultsSummaryLabel}" Classes="Body"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" Classes="Primary" Content="Compare Algorithms"
+                    VerticalAlignment="Center" Command="{Binding OpenCompareCommand}"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Border Classes="Card Elevated" IsVisible="{Binding HasResults}">
+                <StackPanel Spacing="4">
+
+                    <!-- Header -->
+                    <Grid ColumnDefinitions="*,70,70,70,200" Margin="8,4">
+                        <TextBlock Grid.Column="0" Text="ALGORITHM" Classes="CardTitle"/>
+                        <TextBlock Grid.Column="1" Text="HITS" Classes="CardTitle" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Text="FAULTS" Classes="CardTitle" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="3" Text="RATIO" Classes="CardTitle" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="4" Text="HIT RATIO" Classes="CardTitle" Margin="20,0,0,0"/>
+                    </Grid>
+
+                    <Border Classes="Divider" Margin="0,4"/>
+
+                    <ItemsControl ItemsSource="{Binding Results}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:AlgorithmComparisonRowViewModel">
+                                <StackPanel>
+                                    <Grid ColumnDefinitions="*,70,70,70,200" Margin="8,10">
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                            <Ellipse Width="10" Height="10" Fill="{Binding AccentBrush}"/>
+                                            <TextBlock Text="{Binding AlgorithmName}" Classes="H3"/>
+                                            <Border Classes="Pill Success" IsVisible="{Binding IsBest}">
+                                                <TextBlock Text="BEST" Classes="Caption" Foreground="{StaticResource BRUSH_MintGreen}"/>
+                                            </Border>
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Column="1" Text="{Binding PageHits}" Classes="Body"
+                                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding PageFaults}" Classes="Body"
+                                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding HitRatioLabel}" Classes="H3"
+                                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                                        <ProgressBar Grid.Column="4" Value="{Binding HitRatioPercent}"
+                                                     Foreground="{Binding AccentBrush}" Margin="20,0,0,0"/>
+                                    </Grid>
+                                    <Border Classes="Divider" Margin="0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+
+    </Grid>
 
 </UserControl>
