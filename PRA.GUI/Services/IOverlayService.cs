@@ -7,12 +7,11 @@ namespace PRA.GUI.Services;
 /// (the same scrim + centered card used by "New Simulation"), without needing
 /// a reference to MainWindowViewModel itself.
 /// </summary>
-public interface IOverlayService {
-
+public interface IOverlayService
+{
     ViewModelBase? CurrentViewModel { get; }
     bool IsVisible { get; }
 
     void Open(ViewModelBase viewModel);
     void Close();
-
 }

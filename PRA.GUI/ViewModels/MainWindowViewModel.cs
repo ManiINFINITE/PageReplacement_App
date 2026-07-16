@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace PRA.GUI.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase {
-
+public partial class MainWindowViewModel : ViewModelBase
+{
     // Whatever's currently on the Dashboard — preselected in the New
     // Simulation overlay and reassignable once the user picks a different
     // algorithm there.
@@ -27,7 +27,8 @@ public partial class MainWindowViewModel : ViewModelBase {
 
     public IRelayCommand OpenNewSimulationCommand { get; }
 
-    public MainWindowViewModel() {
+    public MainWindowViewModel()
+    {
         // Placeholder input until the GUI has its own setup screen — swap for
         // whatever the user picks once you build that flow.
         var reference = new List<int> { 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2 };
@@ -48,21 +49,22 @@ public partial class MainWindowViewModel : ViewModelBase {
         OpenNewSimulationCommand = new RelayCommand(OpenNewSimulation);
     }
 
-    private void OpenNewSimulation() {
+    private void OpenNewSimulation()
+    {
         Overlay.Open(new NewSimulationViewModel(_algorithm, StartNewSimulation, Overlay.Close));
     }
 
-    private void StartNewSimulation(List<int> referenceString, int frameCount, IPageReplacementAlgorithm algorithm) {
+    private void StartNewSimulation(List<int> referenceString, int frameCount, IPageReplacementAlgorithm algorithm)
+    {
         _algorithm = algorithm;
 
         var result = _algorithm.Run(referenceString, frameCount);
         Dashboard = new DashboardViewModel(result, referenceString);
 
         // Re-point the Dashboard page at the fresh view-model and jump there.
-        Navigation.Register(AppPage.Dashboard, () => Dashboard, cache: false);
+        Navigation.Register(AppPage.Dashboard, () => Dashboard, false);
         Navigation.NavigateTo(AppPage.Dashboard);
 
         Overlay.Close();
     }
-
 }

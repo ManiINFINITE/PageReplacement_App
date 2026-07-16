@@ -25,12 +25,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PRA.Core\PRA.Core.csproj" />
+        <ProjectReference Include="..\PRA.Core\PRA.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Views\MainWindowView.axaml.cs">
-        <DependentUpon>MainWindow.axaml</DependentUpon>
-      </Compile>
+        <Compile Update="Views\MainWindowView.axaml.cs">
+            <DependentUpon>MainWindow.axaml</DependentUpon>
+        </Compile>
     </ItemGroup>
 </Project>

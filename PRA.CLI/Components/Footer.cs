@@ -3,9 +3,10 @@ using Spectre.Console.Rendering;
 
 namespace PRA.CLI.Components;
 
-public static class Footer {
-
-    public static IRenderable Build() {
+public static class Footer
+{
+    public static IRenderable Build()
+    {
         var keys = new Markup(
             $"{Theme.Dim("←/→")} Step   " +
             $"{Theme.Dim("Home/End")} Jump   " +
@@ -19,12 +20,12 @@ public static class Footer {
         );
     }
 
-    public static void Draw() {
+    public static void Draw()
+    {
         AnsiConsole.Write(new Rule().RuleStyle(Theme.BorderStyle));
 
         AnsiConsole.MarkupLine(
             $"{Theme.Dim("← Previous")}    {Theme.Dim("→ Next")}    " +
             $"{Theme.Dim("Home")}    {Theme.Dim("End")}    {Theme.Accent("Esc Exit")}");
     }
-
 }

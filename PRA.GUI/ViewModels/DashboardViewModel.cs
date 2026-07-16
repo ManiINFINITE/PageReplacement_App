@@ -8,10 +8,10 @@ using System.Linq;
 
 namespace PRA.GUI.ViewModels;
 
-public partial class DashboardViewModel : ViewModelBase {
-
-    private readonly SimulationResult _result;
-    private readonly IReadOnlyList<int> _referenceString;
+public partial class DashboardViewModel : ViewModelBase
+{
+    readonly private SimulationResult _result;
+    readonly private IReadOnlyList<int> _referenceString;
 
     [ObservableProperty] private int currentStep;
 
@@ -35,14 +35,17 @@ public partial class DashboardViewModel : ViewModelBase {
     public IRelayCommand JumpToStartCommand { get; }
     public IRelayCommand JumpToEndCommand { get; }
 
-    public DashboardViewModel(SimulationResult result, IReadOnlyList<int> referenceString) {
+    public DashboardViewModel(SimulationResult result, IReadOnlyList<int> referenceString)
+    {
         _result = result;
         _referenceString = referenceString;
 
         NextStepCommand = new RelayCommand(() =>
             CurrentStep = Math.Min(CurrentStep + 1, _result.Steps.Count - 1));
+
         PreviousStepCommand = new RelayCommand(() =>
             CurrentStep = Math.Max(CurrentStep - 1, 0));
+
         JumpToStartCommand = new RelayCommand(() => CurrentStep = 0);
         JumpToEndCommand = new RelayCommand(() => CurrentStep = _result.Steps.Count - 1);
 
@@ -50,9 +53,13 @@ public partial class DashboardViewModel : ViewModelBase {
         Refresh();
     }
 
-    partial void OnCurrentStepChanged(int value) => Refresh();
+    partial void OnCurrentStepChanged(int value)
+    {
+        Refresh();
+    }
 
-    private void Refresh() {
+    private void Refresh()
+    {
         RefreshReferenceTokens();
         RefreshFrames();
 
@@ -68,9 +75,12 @@ public partial class DashboardViewModel : ViewModelBase {
         foreach (var row in HistoryRows) row.SetCurrentStep(CurrentStep);
     }
 
-    private void RefreshReferenceTokens() {
+    private void RefreshReferenceTokens()
+    {
         ReferenceTokens.Clear();
-        for (int i = 0; i < _referenceString.Count; i++) {
+
+        for (int i = 0; i < _referenceString.Count; i++)
+        {
             bool isCurrent = i == CurrentStep;
             bool isPast = i < CurrentStep;
             bool isFault = isPast && _result.Steps[i].IsPageFault;
@@ -79,12 +89,14 @@ public partial class DashboardViewModel : ViewModelBase {
         }
     }
 
-    private void RefreshFrames() {
+    private void RefreshFrames()
+    {
         Frames.Clear();
         var step = _result.Steps[CurrentStep];
 
-        for (int i = 0; i < step.Frames.Count; i++) {
-            var val = step.Frames[i];
+        for (int i = 0; i < step.Frames.Count; i++)
+        {
+            int? val = step.Frames[i];
             bool isCurrentPage = val.HasValue && val.Value == step.CurrentPage;
             bool isReplaced = isCurrentPage && step.IsPageFault && step.ReplacedPage.HasValue;
             bool isFault = isCurrentPage && step.IsPageFault && !step.ReplacedPage.HasValue;
@@ -94,18 +106,22 @@ public partial class DashboardViewModel : ViewModelBase {
         }
     }
 
-    private void BuildHistoryRows() {
+    private void BuildHistoryRows()
+    {
         int frameCount = _result.Steps[0].Frames.Count;
 
-        for (int f = 0; f < frameCount; f++) {
+        for (int f = 0; f < frameCount; f++)
+        {
             var cells = new List<HistoryCellViewModel>();
-            for (int s = 0; s < _result.Steps.Count; s++) {
-                var val = _result.Steps[s].Frames[f];
+
+            for (int s = 0; s < _result.Steps.Count; s++)
+            {
+                int? val = _result.Steps[s].Frames[f];
                 bool isFaultCell = _result.Steps[s].IsPageFault && val == _result.Steps[s].CurrentPage;
                 cells.Add(new HistoryCellViewModel(val?.ToString() ?? "·", isFaultCell));
             }
+
             HistoryRows.Add(new HistoryRowViewModel($"F{f}", cells));
         }
     }
-
 }

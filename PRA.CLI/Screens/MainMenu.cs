@@ -5,10 +5,12 @@ using PRA.CLI.Viewers;
 
 namespace PRA.CLI.Screens;
 
-public class MainMenu {
-
-    public void Show() {
-        while (true) {
+public class MainMenu
+{
+    public void Show()
+    {
+        while (true)
+        {
             string choice = BorderedMenu.Show("Main Menu",
             [
                 "New single simulation",
@@ -20,23 +22,26 @@ public class MainMenu {
 
             if (choice == "Close app") return;
 
-            if (choice == "Settings") {
+            if (choice == "Settings")
+            {
                 new SettingsScreen().Show();
                 continue;
             }
 
-            List<int> reference = UserInput.ReadReferenceString();
+            var reference = UserInput.ReadReferenceString();
             int frames = UserInput.ReadFrameCount();
 
             var algorithms = AlgorithmFactory.GetAlgorithms();
             var runner = new SimulationRunner();
 
-            switch (choice) {
+            switch (choice)
+            {
                 case "Compare all algorithms":
                     new CompareViewer().Show(reference, frames);
                     break;
 
-                case "Compare two algorithms": {
+                case "Compare two algorithms":
+                {
                     string firstName = BorderedMenu.Show(
                         "Choose first algorithm",
                         algorithms.Select(a => a.Name).ToList());
@@ -55,7 +60,8 @@ public class MainMenu {
                     break;
                 }
 
-                default: {
+                default:
+                {
                     string algorithmName = BorderedMenu.Show(
                         "Choose algorithm",
                         algorithms.Select(a => a.Name).ToList());
@@ -69,5 +75,4 @@ public class MainMenu {
             }
         }
     }
-
 }

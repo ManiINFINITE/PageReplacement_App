@@ -4,12 +4,14 @@ using PRA.Core.Utilities;
 
 namespace PRA.Core.Algorithms;
 
-public class ClockAlgorithm : IPageReplacementAlgorithm {
-
+public class ClockAlgorithm : IPageReplacementAlgorithm
+{
     public string Name => "Second Chance (Clock)";
 
-    public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount) {
-        var result = new SimulationResult {
+    public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount)
+    {
+        var result = new SimulationResult
+        {
             AlgorithmName = Name
         };
 
@@ -20,25 +22,32 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
         var referenceBits = new List<bool>();
         int pointer = 0;
 
-        foreach (var page in referenceString) {
+        foreach (int page in referenceString)
+        {
             bool pageFault = false;
             int? replacedPage = null;
 
             int pageIndex = frames.IndexOf(page);
 
-            if (pageIndex != -1) {
+            if (pageIndex != -1)
+            {
                 // Hit
                 result.PageHits++;
                 referenceBits[pageIndex] = true;
-            } else {
+            }
+            else
+            {
                 // Fault
                 pageFault = true;
                 result.PageFaults++;
 
-                if (frames.Count < frameCount) {
+                if (frames.Count < frameCount)
+                {
                     frames.Add(page);
                     referenceBits.Add(true);
-                } else {
+                }
+                else
+                {
                     int victimIndex = FindVictim(referenceBits, ref pointer);
 
                     replacedPage = frames[victimIndex];
@@ -47,7 +56,8 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
                 }
             }
 
-            result.Steps.Add(new SimulationStep {
+            result.Steps.Add(new SimulationStep
+            {
                 CurrentPage = page,
                 IsPageFault = pageFault,
                 ReplacedPage = replacedPage,
@@ -60,9 +70,12 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
         return result;
     }
 
-    private static int FindVictim(List<bool> referenceBits, ref int pointer) {
-        while (true) {
-            if (!referenceBits[pointer]) {
+    private static int FindVictim(List<bool> referenceBits, ref int pointer)
+    {
+        while (true)
+        {
+            if (!referenceBits[pointer])
+            {
                 int victimIndex = pointer;
                 pointer = (pointer + 1) % referenceBits.Count;
                 return victimIndex;
@@ -72,5 +85,4 @@ public class ClockAlgorithm : IPageReplacementAlgorithm {
             pointer = (pointer + 1) % referenceBits.Count;
         }
     }
-
 }

@@ -4,9 +4,9 @@ using PRA.Core.Utilities;
 
 namespace PRA.Core.Algorithms;
 
-public class FifoAlgorithm : IPageReplacementAlgorithm
+public class LfuAlgorithm : IPageReplacementAlgorithm
 {
-    public string Name => "FIFO";
+    public string Name => "LFU";
 
     public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount)
     {
@@ -18,7 +18,10 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
         if (frameCount <= 0 || referenceString.Count == 0) return result;
 
         var frames = new List<int>();
-        var queue = new Queue<int>();
+        var lastAccess = new Dictionary<int, int>();
+        var frequencies = new Dictionary<int, int>();
+        int currentStep = 1;
+
 
         foreach (var page in referenceString)
         {
@@ -28,6 +31,7 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
             if (frames.Contains(page))
             {
                 result.PageHits++;
+                frequencies[page]++;
             }
             else
             {
@@ -37,19 +41,25 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
                 if (frames.Count < frameCount)
                 {
                     frames.Add(page);
-                    queue.Enqueue(page);
+                    frequencies[page] = 0;
+                    frequencies[page]++;
                 }
                 else
                 {
-                    int victim = FindVictim(queue);
+                    int victim = FindVictim(frames, frequencies, lastAccess);
                     replacedPage = victim;
 
                     int victimIndex = frames.IndexOf(victim);
+                    frequencies.Remove(victim);
+                    lastAccess.Remove(victim);
                     frames[victimIndex] = page;
-
-                    queue.Enqueue(page);
+                    frequencies[page] = 1;
                 }
             }
+
+            
+            lastAccess[page] = currentStep;
+            currentStep++;
 
             result.Steps.Add(new SimulationStep
             {
@@ -63,8 +73,15 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
         return result;
     }
 
-    private int FindVictim(Queue<int> queue)
+    private int FindVictim(
+        List<int> frames,
+        Dictionary<int, int> frequencies,
+        Dictionary<int, int> lastAccess
+    )
     {
-        return queue.Dequeue();
+        return frames
+            .OrderBy(p => frequencies[p])
+            .ThenBy(p => lastAccess[p])
+            .First();
     }
 }

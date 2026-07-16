@@ -4,12 +4,14 @@ using PRA.Core.Utilities;
 
 namespace PRA.Core.Algorithms;
 
-public class OptimalAlgorithm : IPageReplacementAlgorithm {
-
+public class OptimalAlgorithm : IPageReplacementAlgorithm
+{
     public string Name => "Optimal";
 
-    public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount) {
-        var result = new SimulationResult {
+    public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount)
+    {
+        var result = new SimulationResult
+        {
             AlgorithmName = Name
         };
 
@@ -17,20 +19,27 @@ public class OptimalAlgorithm : IPageReplacementAlgorithm {
 
         var frames = new List<int>();
 
-        for (int currentIndex = 0; currentIndex < referenceString.Count; currentIndex++) {
+        for (int currentIndex = 0; currentIndex < referenceString.Count; currentIndex++)
+        {
             bool pageFault = false;
             int? replacedPage = null;
             int page = referenceString[currentIndex];
 
-            if (frames.Contains(page)) {
+            if (frames.Contains(page))
+            {
                 result.PageHits++;
-            } else {
+            }
+            else
+            {
                 pageFault = true;
                 result.PageFaults++;
 
-                if (frames.Count < frameCount) {
+                if (frames.Count < frameCount)
+                {
                     frames.Add(page);
-                } else {
+                }
+                else
+                {
                     int victim = FindVictim(frames, referenceString, currentIndex);
                     replacedPage = victim;
 
@@ -39,7 +48,8 @@ public class OptimalAlgorithm : IPageReplacementAlgorithm {
                 }
             }
 
-            result.Steps.Add(new SimulationStep {
+            result.Steps.Add(new SimulationStep
+            {
                 CurrentPage = page,
                 IsPageFault = pageFault,
                 ReplacedPage = replacedPage,
@@ -54,8 +64,10 @@ public class OptimalAlgorithm : IPageReplacementAlgorithm {
         int page,
         IReadOnlyList<int> referenceString,
         int currentIndex
-    ) {
-        for (int i = currentIndex + 1; i < referenceString.Count; i++) {
+    )
+    {
+        for (int i = currentIndex + 1; i < referenceString.Count; i++)
+        {
             if (referenceString[i] == page) return i;
         }
 
@@ -66,17 +78,20 @@ public class OptimalAlgorithm : IPageReplacementAlgorithm {
         List<int> frames,
         IReadOnlyList<int> referenceString,
         int currentIndex
-    ) {
+    )
+    {
         int victim = frames[0];
         int farthestUse = -1;
 
-        foreach (var page in frames) {
+        foreach (int page in frames)
+        {
             int nextUse = FindNextOccurrence(page, referenceString, currentIndex);
 
             // Never used again
             if (nextUse == -1) return page;
 
-            if (nextUse > farthestUse) {
+            if (nextUse > farthestUse)
+            {
                 farthestUse = nextUse;
                 victim = page;
             }
@@ -84,5 +99,4 @@ public class OptimalAlgorithm : IPageReplacementAlgorithm {
 
         return victim;
     }
-
 }

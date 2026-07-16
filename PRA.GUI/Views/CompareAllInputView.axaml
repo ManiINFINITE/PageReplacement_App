@@ -9,31 +9,31 @@
         <StackPanel Spacing="20">
 
             <StackPanel Spacing="4">
-                <TextBlock Text="Compare All Algorithms" Classes="H1"/>
-                <TextBlock Text="Enter a reference string and how many frames to simulate." Classes="Body"/>
+                <TextBlock Text="Compare All Algorithms" Classes="H1" />
+                <TextBlock Text="Enter a reference string and how many frames to simulate." Classes="Body" />
             </StackPanel>
 
             <StackPanel Spacing="6">
-                <TextBlock Text="REFERENCE STRING" Classes="CardTitle"/>
+                <TextBlock Text="REFERENCE STRING" Classes="CardTitle" />
                 <TextBox Text="{Binding ReferenceStringInput}"
                          Watermark="e.g. 7 0 1 2 0 3 0 4 2 3 0 3 2"
-                         Classes.Error="{Binding ReferenceStringError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+                         Classes.Error="{Binding ReferenceStringError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}" />
                 <TextBlock Text="{Binding ReferenceStringError}" Classes="ErrorText"
-                           IsVisible="{Binding ReferenceStringError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+                           IsVisible="{Binding ReferenceStringError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}" />
             </StackPanel>
 
             <StackPanel Spacing="6">
-                <TextBlock Text="FRAME COUNT" Classes="CardTitle"/>
+                <TextBlock Text="FRAME COUNT" Classes="CardTitle" />
                 <TextBox Text="{Binding FrameCountInput}"
                          Watermark="e.g. 3"
-                         Classes.Error="{Binding FrameCountError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+                         Classes.Error="{Binding FrameCountError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}" />
                 <TextBlock Text="{Binding FrameCountError}" Classes="ErrorText"
-                           IsVisible="{Binding FrameCountError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}"/>
+                           IsVisible="{Binding FrameCountError, Converter={x:Static converters:StringNotEmptyConverter.Instance}}" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Right">
-                <Button Classes="Secondary" Content="Cancel" Command="{Binding CancelCommand}"/>
-                <Button Classes="Primary" Content="Run Comparison" Command="{Binding RunCommand}"/>
+                <Button Classes="Secondary" Content="Cancel" Command="{Binding CancelCommand}" />
+                <Button Classes="Primary" Content="Run Comparison" Command="{Binding RunCommand}" />
             </StackPanel>
 
         </StackPanel>

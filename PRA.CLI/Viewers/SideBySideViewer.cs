@@ -4,25 +4,28 @@ using Spectre.Console;
 
 namespace PRA.CLI.Viewers;
 
-public class SideBySideViewer {
-
+public class SideBySideViewer
+{
     public void Show(
         SimulationResult resultA,
         SimulationResult resultB,
         IReadOnlyList<int> referenceString
-    ) {
+    )
+    {
         int currentStep = 0;
         int maxStep = resultA.Steps.Count - 1;
 
         AnsiConsole.Clear();
 
-        while (true) {
+        while (true)
+        {
             AnsiConsole.Cursor.SetPosition(0, 0);
             Draw(resultA, resultB, referenceString, currentStep);
 
             var key = Console.ReadKey(true);
 
-            switch (key.Key) {
+            switch (key.Key)
+            {
                 case ConsoleKey.RightArrow:
                     if (currentStep < maxStep) currentStep++;
                     break;
@@ -41,9 +44,10 @@ public class SideBySideViewer {
         SimulationResult resultB,
         IReadOnlyList<int> referenceString,
         int currentStep
-    ) {
+    )
+    {
         int frameCount = resultA.Steps[currentStep].Frames.Count;
-        int bodyHeight = 4 + (frameCount + 6) + 9;
+        int bodyHeight = 4 + frameCount + 6 + 9;
 
         var root = new Layout("Root")
             .SplitRows(
@@ -85,5 +89,4 @@ public class SideBySideViewer {
 
         AnsiConsole.Write(root);
     }
-
 }

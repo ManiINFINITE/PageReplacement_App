@@ -2,6 +2,4 @@
 
 namespace PRA.GUI.ViewModels;
 
-public abstract class ViewModelBase : ObservableObject {
-
-}
+public abstract class ViewModelBase : ObservableObject { }

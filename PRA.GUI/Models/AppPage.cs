@@ -1,6 +1,7 @@
 namespace PRA.GUI.Services;
 
-public enum AppPage {
+public enum AppPage
+{
     Dashboard,
     CompareAll,
     CompareTwo,

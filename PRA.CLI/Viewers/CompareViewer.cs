@@ -7,14 +7,16 @@ using Spectre.Console;
 
 namespace PRA.CLI.Viewers;
 
-public class CompareViewer {
-
-    readonly private static Color[] Palette = [
+public class CompareViewer
+{
+    readonly private static Color[] Palette =
+    [
         Color.Green3, Color.DeepSkyBlue1, Color.Orange1,
         Color.MediumPurple2, Color.Gold1, Color.Red3, Color.Aqua
     ];
 
-    public void Show(IReadOnlyList<int> referenceString, int frameCount) {
+    public void Show(IReadOnlyList<int> referenceString, int frameCount)
+    {
         var runner = new SimulationRunner();
         var algorithms = AlgorithmFactory.GetAlgorithms();
 
@@ -27,7 +29,8 @@ public class CompareViewer {
             .OrderByDescending(r => r.HitRatio)
             .ToList();
 
-        while (true) {
+        while (true)
+        {
             AnsiConsole.Clear();
             Header.Draw();
 
@@ -50,7 +53,8 @@ public class CompareViewer {
             table.AddColumn(new TableColumn(Theme.Bold("Faults")).Centered());
             table.AddColumn(new TableColumn(Theme.Bold("Hit Ratio")).Centered());
 
-            foreach (var r in results) {
+            foreach (var r in results)
+            {
                 var swatch = colorByAlgorithm[r.AlgorithmName];
 
                 table.AddRow(
@@ -75,7 +79,7 @@ public class CompareViewer {
             AnsiConsole.Write(Align.Center(chart));
             AnsiConsole.WriteLine();
 
-            var choice = AnsiConsole.Prompt(
+            string choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title(Theme.Warn("What next?"))
                     .AddChoices(
@@ -85,7 +89,8 @@ public class CompareViewer {
 
             if (choice == "[grey]Back[/]") return;
 
-            if (choice == "Export comparison") {
+            if (choice == "Export comparison")
+            {
                 string csv = ExportService.ComparisonToCsv(results, referenceString);
                 string md = ExportService.ComparisonToMarkdown(results, referenceString);
 
@@ -104,5 +109,4 @@ public class CompareViewer {
             new SimulationViewer().Show(selected, referenceString);
         }
     }
-
 }

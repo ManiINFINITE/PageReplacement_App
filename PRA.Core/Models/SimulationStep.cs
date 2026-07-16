@@ -1,7 +1,7 @@
 ﻿namespace PRA.Core.Models;
 
-public class SimulationStep {
-
+public class SimulationStep
+{
     public required int CurrentPage { get; init; }
     public List<int?> Frames { get; init; } = [];
     public bool IsPageFault { get; init; }
@@ -13,5 +13,4 @@ public class SimulationStep {
 
     // LFU
     public List<int>? Frequencies { get; init; }
-
 }

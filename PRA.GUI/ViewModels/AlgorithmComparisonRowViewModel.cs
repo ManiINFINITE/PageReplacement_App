@@ -3,8 +3,8 @@ using PRA.Core.Models;
 
 namespace PRA.GUI.ViewModels;
 
-public class AlgorithmComparisonRowViewModel(SimulationResult result, bool isBest, IBrush accentBrush) {
-
+public class AlgorithmComparisonRowViewModel(SimulationResult result, bool isBest, IBrush accentBrush)
+{
     public string AlgorithmName => result.AlgorithmName;
     public int PageHits => result.PageHits;
     public int PageFaults => result.PageFaults;
@@ -12,5 +12,4 @@ public class AlgorithmComparisonRowViewModel(SimulationResult result, bool isBes
     public double HitRatioPercent => result.HitRatio * 100;
     public bool IsBest => isBest;
     public IBrush AccentBrush => accentBrush;
-
 }

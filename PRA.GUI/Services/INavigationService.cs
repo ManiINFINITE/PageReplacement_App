@@ -10,8 +10,8 @@ namespace PRA.GUI.Services;
 /// to switch pages; the shell just renders <see cref="CurrentViewModel"/> via a
 /// ContentControl + ViewLocator.
 /// </summary>
-public interface INavigationService {
-
+public interface INavigationService
+{
     /// <summary>The view-model currently on screen. Bind a ContentControl to this.</summary>
     ViewModelBase? CurrentViewModel { get; }
 
@@ -26,5 +26,4 @@ public interface INavigationService {
 
     /// <summary>Switches the current page, building (or reusing) its view-model.</summary>
     void NavigateTo(AppPage page);
-
 }

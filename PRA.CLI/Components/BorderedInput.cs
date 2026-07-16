@@ -2,18 +2,20 @@
 
 namespace PRA.CLI.Components;
 
-public static class BorderedInput {
-
+public static class BorderedInput
+{
     public static string Show(
         string label,
         string? placeholder = null,
         Func<string, bool>? validate = null,
         string? errorMessage = null
-    ) {
+    )
+    {
         string input = "";
         string? error = null;
 
-        while (true) {
+        while (true)
+        {
             AnsiConsole.Clear();
             Header.Draw();
             AnsiConsole.WriteLine();
@@ -24,7 +26,8 @@ public static class BorderedInput {
 
             var content = new Markup($"{Theme.Accent(">")} {display}[{Theme.PrimaryName} blink]_[/]");
 
-            var panel = new Panel(content) {
+            var panel = new Panel(content)
+            {
                 Header = new PanelHeader(Theme.Bold(label.ToUpper()), Justify.Center),
                 Border = Theme.Border,
                 BorderStyle = Theme.BorderStyle,
@@ -33,7 +36,8 @@ public static class BorderedInput {
 
             AnsiConsole.Write(Align.Center(panel));
 
-            if (error is not null) {
+            if (error is not null)
+            {
                 AnsiConsole.WriteLine();
                 AnsiConsole.Write(Align.Center(new Markup(Theme.Fault(error))));
             }
@@ -45,7 +49,8 @@ public static class BorderedInput {
 
             var key = Console.ReadKey(true);
 
-            if (key.Key == ConsoleKey.Enter) {
+            if (key.Key == ConsoleKey.Enter)
+            {
                 if (input.Length == 0) continue;
 
                 if (validate is null || validate(input)) return input;
@@ -54,17 +59,18 @@ public static class BorderedInput {
                 continue;
             }
 
-            if (key.Key == ConsoleKey.Backspace) {
+            if (key.Key == ConsoleKey.Backspace)
+            {
                 if (input.Length > 0) input = input[..^1];
                 error = null;
                 continue;
             }
 
-            if (!char.IsControl(key.KeyChar)) {
+            if (!char.IsControl(key.KeyChar))
+            {
                 input += key.KeyChar;
                 error = null;
             }
         }
     }
-
 }

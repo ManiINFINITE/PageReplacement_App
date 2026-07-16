@@ -1,0 +1,5 @@
+Algorithm,Hits,Faults,HitRatio
+Optimal,2,4,33.3%
+FIFO,1,5,16.7%
+Second Chance (Clock),1,5,16.7%
+LRU,1,5,16.7%

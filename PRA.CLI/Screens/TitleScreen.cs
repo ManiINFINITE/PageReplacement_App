@@ -3,9 +3,10 @@ using Spectre.Console;
 
 namespace PRA.CLI.Screens;
 
-public class TitleScreen {
-
-    public void Show() {
+public class TitleScreen
+{
+    public void Show()
+    {
         AnsiConsole.Clear();
 
         var figlet = Align.Center(
@@ -16,7 +17,8 @@ public class TitleScreen {
 
         var content = new Rows(figlet, subtitle);
 
-        var panel = new Panel(Align.Center(content, VerticalAlignment.Middle)) {
+        var panel = new Panel(Align.Center(content, VerticalAlignment.Middle))
+        {
             Header = new PanelHeader(Theme.Bold("SYSTEM BOOT"), Justify.Center),
             Border = Theme.Border,
             BorderStyle = Theme.BorderStyle,
@@ -33,5 +35,4 @@ public class TitleScreen {
 
         Console.ReadKey(true);
     }
-
 }

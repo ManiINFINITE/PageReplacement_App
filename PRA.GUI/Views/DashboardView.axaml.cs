@@ -2,10 +2,10 @@ using Avalonia.Controls;
 
 namespace PRA.GUI.Views;
 
-public partial class DashboardView : UserControl {
-
-    public DashboardView() {
+public partial class DashboardView : UserControl
+{
+    public DashboardView()
+    {
         InitializeComponent();
     }
-
 }

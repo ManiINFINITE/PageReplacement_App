@@ -3,22 +3,29 @@ using System.Text;
 
 namespace PRA.CLI.Services;
 
-public static class ExportService {
-
+public static class ExportService
+{
     // ---------- Single algorithm run ----------
 
-    public static string ToCsv(SimulationResult result, IReadOnlyList<int> referenceString) {
+    public static string ToCsv(SimulationResult result, IReadOnlyList<int> referenceString)
+    {
         var sb = new StringBuilder();
         int frameCount = result.Steps[0].Frames.Count;
 
         sb.Append("Step,Page");
-        for (int f = 0; f < frameCount; f++) sb.Append($",F{f}");
+
+        for (int f = 0; f < frameCount; f++)
+        {
+            sb.Append($",F{f}");
+        }
+
         sb.AppendLine(",Result,Replaced");
 
-        for (int i = 0; i < result.Steps.Count; i++) {
+        for (int i = 0; i < result.Steps.Count; i++)
+        {
             var step = result.Steps[i];
             sb.Append($"{i + 1},{step.CurrentPage}");
-            foreach (var frame in step.Frames) sb.Append($",{frame?.ToString() ?? ""}");
+            foreach (int? frame in step.Frames) sb.Append($",{frame?.ToString() ?? ""}");
             sb.Append($",{(step.IsPageFault ? "Fault" : "Hit")}");
             sb.AppendLine($",{step.ReplacedPage?.ToString() ?? ""}");
         }
@@ -33,7 +40,8 @@ public static class ExportService {
         return sb.ToString();
     }
 
-    public static string ToMarkdown(SimulationResult result, IReadOnlyList<int> referenceString) {
+    public static string ToMarkdown(SimulationResult result, IReadOnlyList<int> referenceString)
+    {
         var sb = new StringBuilder();
         int frameCount = result.Steps[0].Frames.Count;
 
@@ -47,17 +55,28 @@ public static class ExportService {
         sb.AppendLine();
 
         sb.Append("| Step | Page |");
-        for (int f = 0; f < frameCount; f++) sb.Append($" F{f} |");
+
+        for (int f = 0; f < frameCount; f++)
+        {
+            sb.Append($" F{f} |");
+        }
+
         sb.AppendLine(" Result | Replaced |");
 
         sb.Append("|---|---|");
-        for (int f = 0; f < frameCount; f++) sb.Append("---|");
+
+        for (int f = 0; f < frameCount; f++)
+        {
+            sb.Append("---|");
+        }
+
         sb.AppendLine("---|---|");
 
-        for (int i = 0; i < result.Steps.Count; i++) {
+        for (int i = 0; i < result.Steps.Count; i++)
+        {
             var step = result.Steps[i];
             sb.Append($"| {i + 1} | {step.CurrentPage} |");
-            foreach (var frame in step.Frames) sb.Append($" {frame?.ToString() ?? "-"} |");
+            foreach (int? frame in step.Frames) sb.Append($" {frame?.ToString() ?? "-"} |");
             sb.Append(step.IsPageFault ? " Fault |" : " Hit |");
             sb.AppendLine($" {step.ReplacedPage?.ToString() ?? "-"} |");
         }
@@ -67,7 +86,8 @@ public static class ExportService {
 
     // ---------- Comparison of multiple algorithms ----------
 
-    public static string ComparisonToCsv(IReadOnlyList<SimulationResult> results, IReadOnlyList<int> referenceString) {
+    public static string ComparisonToCsv(IReadOnlyList<SimulationResult> results, IReadOnlyList<int> referenceString)
+    {
         var sb = new StringBuilder();
         sb.AppendLine("Algorithm,Hits,Faults,HitRatio");
 
@@ -80,7 +100,8 @@ public static class ExportService {
     public static string ComparisonToMarkdown(
         IReadOnlyList<SimulationResult> results,
         IReadOnlyList<int> referenceString
-    ) {
+    )
+    {
         var sb = new StringBuilder();
         sb.AppendLine("# Algorithm Comparison");
         sb.AppendLine();
@@ -98,7 +119,8 @@ public static class ExportService {
 
     // ---------- IO ----------
 
-    public static string Save(string content, string fileName) {
+    public static string Save(string content, string fileName)
+    {
         string dir = Path.Combine(Environment.CurrentDirectory, "exports");
         Directory.CreateDirectory(dir);
 
@@ -106,5 +128,4 @@ public static class ExportService {
         File.WriteAllText(path, content);
         return path;
     }
-
 }

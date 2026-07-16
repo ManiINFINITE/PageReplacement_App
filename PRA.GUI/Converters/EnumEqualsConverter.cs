@@ -9,18 +9,19 @@ namespace PRA.GUI.Converters;
 ///     Classes.Active="{Binding Navigation.CurrentPage, Converter=..., ConverterParameter=...}"
 ///     on the navbar buttons.
 /// </summary>
-public class EnumEqualsConverter : IValueConverter {
-
+public class EnumEqualsConverter : IValueConverter
+{
     public readonly static EnumEqualsConverter Instance = new();
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) {
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
         if (value is null || parameter is null) return false;
 
         return value.Equals(parameter);
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) {
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
         throw new NotSupportedException();
     }
-
 }

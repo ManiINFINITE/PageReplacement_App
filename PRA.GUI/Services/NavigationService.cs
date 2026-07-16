@@ -6,34 +6,40 @@ using PRA.GUI.ViewModels;
 
 namespace PRA.GUI.Services;
 
-public partial class NavigationService : ObservableObject, INavigationService {
-
-    private readonly Dictionary<AppPage, Func<ViewModelBase>> _factories = new();
-    private readonly Dictionary<AppPage, ViewModelBase> _cache = new();
+public partial class NavigationService : ObservableObject, INavigationService
+{
+    readonly private Dictionary<AppPage, Func<ViewModelBase>> _factories = new();
+    readonly private Dictionary<AppPage, ViewModelBase> _cache = new();
 
     [ObservableProperty] private ViewModelBase? currentViewModel;
     [ObservableProperty] private AppPage currentPage;
 
     public IRelayCommand<AppPage> NavigateCommand { get; }
 
-    public NavigationService() {
+    public NavigationService()
+    {
         NavigateCommand = new RelayCommand<AppPage>(NavigateTo);
     }
 
-    public void Register(AppPage page, Func<ViewModelBase> factory, bool cache = true) {
+    public void Register(AppPage page, Func<ViewModelBase> factory, bool cache = true)
+    {
         _factories[page] = factory;
 
-        if (!cache) {
+        if (!cache)
+        {
             _cache.Remove(page);
         }
     }
 
-    public void NavigateTo(AppPage page) {
-        if (!_factories.TryGetValue(page, out var factory)) {
+    public void NavigateTo(AppPage page)
+    {
+        if (!_factories.TryGetValue(page, out var factory))
+        {
             return;
         }
 
-        if (!_cache.TryGetValue(page, out var viewModel)) {
+        if (!_cache.TryGetValue(page, out var viewModel))
+        {
             viewModel = factory();
             _cache[page] = viewModel;
         }
@@ -41,5 +47,4 @@ public partial class NavigationService : ObservableObject, INavigationService {
         CurrentViewModel = viewModel;
         CurrentPage = page;
     }
-
 }

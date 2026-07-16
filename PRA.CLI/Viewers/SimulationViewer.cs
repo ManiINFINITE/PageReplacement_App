@@ -7,28 +7,32 @@ using Spectre.Console.Rendering;
 
 namespace PRA.CLI.Viewers;
 
-public class SimulationViewer {
-
+public class SimulationViewer
+{
     private bool _showOverview = false;
 
-    public void Show(SimulationResult result, IReadOnlyList<int> referenceString) {
+    public void Show(SimulationResult result, IReadOnlyList<int> referenceString)
+    {
         int currentStep = 0;
         AnsiConsole.Clear();
 
-        while (true) {
+        while (true)
+        {
             AnsiConsole.Cursor.SetPosition(0, 0); // avoid full clear-flicker every frame
             Draw(result, referenceString, currentStep);
 
             var key = Console.ReadKey(true);
 
-            switch (key.Key) {
+            switch (key.Key)
+            {
                 case ConsoleKey.RightArrow:
                     if (currentStep < result.Steps.Count - 1) currentStep++;
                     break;
                 case ConsoleKey.LeftArrow:
                     if (currentStep > 0) currentStep--;
                     break;
-                case ConsoleKey.E: {
+                case ConsoleKey.E:
+                {
                     string csv = ExportService.ToCsv(result, referenceString);
                     string md = ExportService.ToMarkdown(result, referenceString);
                     string safeName = result.AlgorithmName.Replace(" ", "_").Replace("(", "").Replace(")", "");
@@ -55,7 +59,8 @@ public class SimulationViewer {
     }
 
     // SimulationViewer.cs
-    private void Draw(SimulationResult result, IReadOnlyList<int> referenceString, int currentStep) {
+    private void Draw(SimulationResult result, IReadOnlyList<int> referenceString, int currentStep)
+    {
         int frameCount = result.Steps[currentStep].Frames.Count;
 
         // Size the body to what the content actually needs, not the terminal height.
@@ -99,5 +104,4 @@ public class SimulationViewer {
 
         AnsiConsole.Write(root);
     }
-
 }

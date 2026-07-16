@@ -3,9 +3,10 @@ using Spectre.Console;
 
 namespace PRA.CLI.Components;
 
-public static class InfoPanel {
-
-    public static Panel Build(SimulationResult result, int currentStep) {
+public static class InfoPanel
+{
+    public static Panel Build(SimulationResult result, int currentStep)
+    {
         var step = result.Steps[currentStep];
 
         var grid = new Grid();
@@ -24,7 +25,8 @@ public static class InfoPanel {
                 : $"replaced {Theme.Dim("nothing")}"
         ).Centered());
 
-        return new Panel(Align.Center(grid, VerticalAlignment.Middle)) {
+        return new Panel(Align.Center(grid, VerticalAlignment.Middle))
+        {
             Header = new PanelHeader(Theme.Bold("SIMULATION"), Justify.Center),
             Border = Theme.Border,
             BorderStyle = Theme.BorderStyle,
@@ -32,5 +34,4 @@ public static class InfoPanel {
             Padding = new Padding(2, 1, 2, 1)
         };
     }
-
 }

@@ -3,10 +3,11 @@ using PRA.CLI.Services;
 
 namespace PRA.CLI.Input;
 
-public static class ExportPrompt {
-
-    public static string? Run(string defaultFileNameBase, string csvContent, string markdownContent) {
-        var format = AnsiConsole.Prompt(
+public static class ExportPrompt
+{
+    public static string? Run(string defaultFileNameBase, string csvContent, string markdownContent)
+    {
+        string format = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[yellow]Export format[/]")
                 .AddChoices("CSV", "Markdown", "[grey]Cancel[/]"));
@@ -24,5 +25,4 @@ public static class ExportPrompt {
 
         return ExportService.Save(content, fileName);
     }
-
 }

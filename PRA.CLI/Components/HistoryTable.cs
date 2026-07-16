@@ -3,9 +3,10 @@ using Spectre.Console;
 
 namespace PRA.CLI.Components;
 
-public static class HistoryTable {
-
-    public static Panel Build(SimulationResult result, IReadOnlyList<int> referenceString, int currentStep) {
+public static class HistoryTable
+{
+    public static Panel Build(SimulationResult result, IReadOnlyList<int> referenceString, int currentStep)
+    {
         int frameCount = result.Steps[0].Frames.Count;
 
         var table = new Table()
@@ -14,14 +15,16 @@ public static class HistoryTable {
 
         table.AddColumn(new TableColumn("").Centered().Padding(1, 1, 1, 0));
 
-        foreach (var page in referenceString)
+        foreach (int page in referenceString)
             table.AddColumn(new TableColumn(Theme.Dim(page.ToString())).Centered().Padding(1, 1, 1, 0));
 
-        for (int f = 0; f < frameCount; f++) {
+        for (int f = 0; f < frameCount; f++)
+        {
             var row = new List<string> { Theme.Dim($"F{f}") };
 
-            for (int s = 0; s < result.Steps.Count; s++) {
-                var val = result.Steps[s].Frames[f];
+            for (int s = 0; s < result.Steps.Count; s++)
+            {
+                int? val = result.Steps[s].Frames[f];
                 string cell = val?.ToString() ?? "·";
 
                 if (s == currentStep)
@@ -37,7 +40,8 @@ public static class HistoryTable {
             table.AddRow(row.ToArray());
         }
 
-        return new Panel(Align.Center(table, VerticalAlignment.Middle)) {
+        return new Panel(Align.Center(table, VerticalAlignment.Middle))
+        {
             Header = new PanelHeader(Theme.Bold("HISTORY"), Justify.Center),
             Border = Theme.Border,
             BorderStyle = Theme.BorderStyle,
@@ -45,5 +49,4 @@ public static class HistoryTable {
             Padding = new Padding(1, 1, 1, 1)
         };
     }
-
 }

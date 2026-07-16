@@ -8,8 +8,8 @@ using System.Collections.Generic;
 
 namespace PRA.GUI.ViewModels;
 
-public partial class NewSimulationViewModel : ViewModelBase {
-
+public partial class NewSimulationViewModel : ViewModelBase
+{
     readonly private Action<List<int>, int, IPageReplacementAlgorithm> _onStart;
     readonly private Action _onCancel;
 
@@ -30,7 +30,8 @@ public partial class NewSimulationViewModel : ViewModelBase {
         IPageReplacementAlgorithm currentAlgorithm,
         Action<List<int>, int, IPageReplacementAlgorithm> onStart,
         Action onCancel
-    ) {
+    )
+    {
         _onStart = onStart;
         _onCancel = onCancel;
         selectedAlgorithm = currentAlgorithm;
@@ -39,7 +40,8 @@ public partial class NewSimulationViewModel : ViewModelBase {
         CancelCommand = new RelayCommand(() => _onCancel());
     }
 
-    private void Start() {
+    private void Start()
+    {
         bool referenceOk =
             InputParsing.TryParseReferenceString(ReferenceStringInput, out var reference, out string? referenceError);
 
@@ -53,5 +55,4 @@ public partial class NewSimulationViewModel : ViewModelBase {
 
         _onStart(reference, frameCount, SelectedAlgorithm);
     }
-
 }

@@ -3,123 +3,123 @@
 
     <!-- Base dashboard card -->
     <Style Selector="Border.Card">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
-        <Setter Property="CornerRadius" Value="14"/>
-        <Setter Property="Padding" Value="14"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
-        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="14" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}" />
+        <Setter Property="ClipToBounds" Value="True" />
     </Style>
 
     <Style Selector="Border.Card.Elevated">
-        <Setter Property="BoxShadow" Value="0 8 24 0 #40000000"/>
+        <Setter Property="BoxShadow" Value="0 8 24 0 #40000000" />
     </Style>
 
     <Style Selector="Border.Card.Accent">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}" />
     </Style>
 
     <!-- Sidebar -->
     <Style Selector="Border.Sidebar">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_SmokyBlack}"/>
-        <Setter Property="Padding" Value="16"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_SmokyBlack}" />
+        <Setter Property="Padding" Value="16" />
     </Style>
 
     <!-- Frame slot -->
     <Style Selector="Border.FrameSlot">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
-        <Setter Property="CornerRadius" Value="12"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
-        <Setter Property="Width" Value="44"/>
-        <Setter Property="Height" Value="44"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}" />
+        <Setter Property="Width" Value="44" />
+        <Setter Property="Height" Value="44" />
     </Style>
 
     <Style Selector="Border.FrameSlot.Hit">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_MintGreen}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_MintGreen}" />
     </Style>
 
     <Style Selector="Border.FrameSlot.Fault">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Crimson}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Crimson}" />
     </Style>
 
     <Style Selector="Border.FrameSlot.Replaced">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_AmberMuted}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Amber}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_AmberMuted}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Amber}" />
     </Style>
 
     <!-- Reference string token -->
     <Style Selector="Border.RefToken">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
-        <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="Padding" Value="8,4"/>
-        <Setter Property="Margin" Value="3,0"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="Margin" Value="3,0" />
     </Style>
 
     <Style Selector="Border.RefToken.Current">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}" />
     </Style>
 
     <Style Selector="Border.RefToken.Hit">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}" />
     </Style>
 
     <Style Selector="Border.RefToken.Fault">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}" />
     </Style>
 
     <!-- Divider -->
     <Style Selector="Border.Divider">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
-        <Setter Property="Height" Value="1"/>
-        <Setter Property="Margin" Value="0,8"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="0,8" />
     </Style>
 
     <!-- Badge / pill -->
     <Style Selector="Border.Pill">
-        <Setter Property="CornerRadius" Value="999"/>
-        <Setter Property="Padding" Value="10,3"/>
-        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
+        <Setter Property="CornerRadius" Value="999" />
+        <Setter Property="Padding" Value="10,3" />
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}" />
     </Style>
 
     <Style Selector="Border.Pill.Success">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_MintGreenMuted}" />
     </Style>
 
     <Style Selector="Border.Pill.Danger">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}" />
     </Style>
-    
+
     <Style Selector="Border.HistoryCell">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}"/>
-        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_RaisinBlack}" />
+        <Setter Property="CornerRadius" Value="5" />
     </Style>
 
     <Style Selector="Border.HistoryCell.Fault">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_CrimsonMuted}" />
     </Style>
 
     <Style Selector="Border.HistoryCell.Current">
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}"/>
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_FireOpal}" />
     </Style>
 
     <!-- Modal scrim (dims everything behind an overlay) -->
     <Style Selector="Border.Scrim">
-        <Setter Property="Background" Value="#B3141615"/>
+        <Setter Property="Background" Value="#B3141615" />
     </Style>
 
     <!-- Modal card shown on top of the scrim -->
     <Style Selector="Border.OverlayCard">
-        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
-        <Setter Property="CornerRadius" Value="18"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}"/>
-        <Setter Property="BoxShadow" Value="0 16 48 0 #60000000"/>
-        <Setter Property="Padding" Value="28"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BRUSH_Ash}" />
+        <Setter Property="BoxShadow" Value="0 16 48 0 #60000000" />
+        <Setter Property="Padding" Value="28" />
     </Style>
 
 </Styles>

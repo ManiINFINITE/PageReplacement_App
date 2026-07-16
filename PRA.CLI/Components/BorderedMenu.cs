@@ -3,19 +3,22 @@ using Spectre.Console.Rendering;
 
 namespace PRA.CLI.Components;
 
-public static class BorderedMenu {
-
-    public static string Show(string title, IReadOnlyList<string> options) {
+public static class BorderedMenu
+{
+    public static string Show(string title, IReadOnlyList<string> options)
+    {
         int selected = 0;
 
-        while (true) {
+        while (true)
+        {
             AnsiConsole.Clear();
             Header.Draw();
             AnsiConsole.WriteLine();
 
             var rows = new List<IRenderable>();
 
-            for (int i = 0; i < options.Count; i++) {
+            for (int i = 0; i < options.Count; i++)
+            {
                 string label = options[i];
 
                 rows.Add(i == selected
@@ -23,7 +26,8 @@ public static class BorderedMenu {
                     : new Markup($"{Theme.Dim($"   {label,-30} ")}"));
             }
 
-            var panel = new Panel(Align.Center(new Rows(rows), VerticalAlignment.Middle)) {
+            var panel = new Panel(Align.Center(new Rows(rows), VerticalAlignment.Middle))
+            {
                 Header = new PanelHeader(Theme.Bold(title.ToUpper()), Justify.Center),
                 Border = Theme.Border,
                 BorderStyle = Theme.BorderStyle,
@@ -39,7 +43,8 @@ public static class BorderedMenu {
 
             var key = Console.ReadKey(true);
 
-            switch (key.Key) {
+            switch (key.Key)
+            {
                 case ConsoleKey.UpArrow:
                     selected = (selected - 1 + options.Count) % options.Count;
                     break;
@@ -51,5 +56,4 @@ public static class BorderedMenu {
             }
         }
     }
-
 }

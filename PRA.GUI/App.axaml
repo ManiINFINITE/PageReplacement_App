@@ -5,16 +5,16 @@
              RequestedThemeVariant="Dark">
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://PRA.GUI/Styles/BordersStyles.axaml"/>
-        <StyleInclude Source="avares://PRA.GUI/Styles/TextBlocksStyles.axaml"/>
-        <StyleInclude Source="avares://PRA.GUI/Styles/ButtonsStyles.axaml"/>
-        <StyleInclude Source="avares://PRA.GUI/Styles/InputsStyles.axaml"/>
-        <StyleInclude Source="avares://PRA.GUI/Styles/ProgressStyles.axaml"/>
+        <StyleInclude Source="avares://PRA.GUI/Styles/BordersStyles.axaml" />
+        <StyleInclude Source="avares://PRA.GUI/Styles/TextBlocksStyles.axaml" />
+        <StyleInclude Source="avares://PRA.GUI/Styles/ButtonsStyles.axaml" />
+        <StyleInclude Source="avares://PRA.GUI/Styles/InputsStyles.axaml" />
+        <StyleInclude Source="avares://PRA.GUI/Styles/ProgressStyles.axaml" />
     </Application.Styles>
 
     <Application.Resources>
@@ -43,25 +43,25 @@
         <Color x:Key="COLOR_TextDisabled">#5A5D5B</Color>
 
         <!-- Brushes -->
-        <SolidColorBrush x:Key="BRUSH_RaisinBlack" Color="{StaticResource COLOR_RaisinBlack}"/>
-        <SolidColorBrush x:Key="BRUSH_Jet" Color="{StaticResource COLOR_Jet}"/>
-        <SolidColorBrush x:Key="BRUSH_SmokyBlack" Color="{StaticResource COLOR_SmokyBlack}"/>
-        <SolidColorBrush x:Key="BRUSH_Ash" Color="{StaticResource COLOR_Ash}"/>
+        <SolidColorBrush x:Key="BRUSH_RaisinBlack" Color="{StaticResource COLOR_RaisinBlack}" />
+        <SolidColorBrush x:Key="BRUSH_Jet" Color="{StaticResource COLOR_Jet}" />
+        <SolidColorBrush x:Key="BRUSH_SmokyBlack" Color="{StaticResource COLOR_SmokyBlack}" />
+        <SolidColorBrush x:Key="BRUSH_Ash" Color="{StaticResource COLOR_Ash}" />
 
-        <SolidColorBrush x:Key="BRUSH_FireOpal" Color="{StaticResource COLOR_FireOpal}"/>
-        <SolidColorBrush x:Key="BRUSH_FireOpalMuted" Color="{StaticResource COLOR_FireOpalMuted}"/>
+        <SolidColorBrush x:Key="BRUSH_FireOpal" Color="{StaticResource COLOR_FireOpal}" />
+        <SolidColorBrush x:Key="BRUSH_FireOpalMuted" Color="{StaticResource COLOR_FireOpalMuted}" />
 
-        <SolidColorBrush x:Key="BRUSH_MintGreen" Color="{StaticResource COLOR_MintGreen}"/>
-        <SolidColorBrush x:Key="BRUSH_MintGreenMuted" Color="{StaticResource COLOR_MintGreenMuted}"/>
-        <SolidColorBrush x:Key="BRUSH_Crimson" Color="{StaticResource COLOR_Crimson}"/>
-        <SolidColorBrush x:Key="BRUSH_CrimsonMuted" Color="{StaticResource COLOR_CrimsonMuted}"/>
-        <SolidColorBrush x:Key="BRUSH_Amber" Color="{StaticResource COLOR_Amber}"/>
-        <SolidColorBrush x:Key="BRUSH_AmberMuted" Color="{StaticResource COLOR_AmberMuted}"/>
-        <SolidColorBrush x:Key="BRUSH_Sky" Color="{StaticResource COLOR_Sky}"/>
+        <SolidColorBrush x:Key="BRUSH_MintGreen" Color="{StaticResource COLOR_MintGreen}" />
+        <SolidColorBrush x:Key="BRUSH_MintGreenMuted" Color="{StaticResource COLOR_MintGreenMuted}" />
+        <SolidColorBrush x:Key="BRUSH_Crimson" Color="{StaticResource COLOR_Crimson}" />
+        <SolidColorBrush x:Key="BRUSH_CrimsonMuted" Color="{StaticResource COLOR_CrimsonMuted}" />
+        <SolidColorBrush x:Key="BRUSH_Amber" Color="{StaticResource COLOR_Amber}" />
+        <SolidColorBrush x:Key="BRUSH_AmberMuted" Color="{StaticResource COLOR_AmberMuted}" />
+        <SolidColorBrush x:Key="BRUSH_Sky" Color="{StaticResource COLOR_Sky}" />
 
-        <SolidColorBrush x:Key="BRUSH_TextPrimary" Color="{StaticResource COLOR_TextPrimary}"/>
-        <SolidColorBrush x:Key="BRUSH_TextSecondary" Color="{StaticResource COLOR_TextSecondary}"/>
-        <SolidColorBrush x:Key="BRUSH_TextDisabled" Color="{StaticResource COLOR_TextDisabled}"/>
+        <SolidColorBrush x:Key="BRUSH_TextPrimary" Color="{StaticResource COLOR_TextPrimary}" />
+        <SolidColorBrush x:Key="BRUSH_TextSecondary" Color="{StaticResource COLOR_TextSecondary}" />
+        <SolidColorBrush x:Key="BRUSH_TextDisabled" Color="{StaticResource COLOR_TextDisabled}" />
 
         <!-- Fonts -->
         <FontFamily x:Key="Nunito-Regular">Assets/Fonts/Nunito-Regular.ttf#Nunito Regular</FontFamily>

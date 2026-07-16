@@ -11,10 +11,10 @@ namespace PRA.GUI.ViewModels;
 /// running the Compare All page. Same shape as NewSimulationViewModel, minus
 /// an algorithm picker — Compare All always runs every algorithm.
 /// </summary>
-public partial class CompareAllInputViewModel : ViewModelBase {
-
-    private readonly Action<List<int>, int> _onRun;
-    private readonly Action _onCancel;
+public partial class CompareAllInputViewModel : ViewModelBase
+{
+    readonly private Action<List<int>, int> _onRun;
+    readonly private Action _onCancel;
 
     [ObservableProperty] private string referenceStringInput = "7 0 1 2 0 3 0 4 2 3 0 3 2";
     [ObservableProperty] private string frameCountInput = "3";
@@ -25,7 +25,8 @@ public partial class CompareAllInputViewModel : ViewModelBase {
     public IRelayCommand RunCommand { get; }
     public IRelayCommand CancelCommand { get; }
 
-    public CompareAllInputViewModel(Action<List<int>, int> onRun, Action onCancel) {
+    public CompareAllInputViewModel(Action<List<int>, int> onRun, Action onCancel)
+    {
         _onRun = onRun;
         _onCancel = onCancel;
 
@@ -33,9 +34,13 @@ public partial class CompareAllInputViewModel : ViewModelBase {
         CancelCommand = new RelayCommand(() => _onCancel());
     }
 
-    private void Run() {
-        bool referenceOk = InputParsing.TryParseReferenceString(ReferenceStringInput, out var reference, out var referenceError);
-        bool frameCountOk = InputParsing.TryParseFrameCount(FrameCountInput, out var frameCount, out var frameCountErrorMessage);
+    private void Run()
+    {
+        bool referenceOk =
+            InputParsing.TryParseReferenceString(ReferenceStringInput, out var reference, out string? referenceError);
+
+        bool frameCountOk =
+            InputParsing.TryParseFrameCount(FrameCountInput, out int frameCount, out string? frameCountErrorMessage);
 
         ReferenceStringError = referenceError;
         FrameCountError = frameCountErrorMessage;
@@ -44,5 +49,4 @@ public partial class CompareAllInputViewModel : ViewModelBase {
 
         _onRun(reference, frameCount);
     }
-
 }

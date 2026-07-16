@@ -4,9 +4,9 @@ using PRA.Core.Utilities;
 
 namespace PRA.Core.Algorithms;
 
-public class FifoAlgorithm : IPageReplacementAlgorithm
+public class LruAlgorithm : IPageReplacementAlgorithm
 {
-    public string Name => "FIFO";
+    public string Name => "LRU";
 
     public SimulationResult Run(IReadOnlyList<int> referenceString, int frameCount)
     {
@@ -18,7 +18,9 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
         if (frameCount <= 0 || referenceString.Count == 0) return result;
 
         var frames = new List<int>();
-        var queue = new Queue<int>();
+        var lastAccess = new Dictionary<int, int>();
+
+        int currentStep = 1;
 
         foreach (var page in referenceString)
         {
@@ -37,17 +39,14 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
                 if (frames.Count < frameCount)
                 {
                     frames.Add(page);
-                    queue.Enqueue(page);
                 }
                 else
                 {
-                    int victim = FindVictim(queue);
+                    var victim = FindVictim(frames, lastAccess);
                     replacedPage = victim;
-
-                    int victimIndex = frames.IndexOf(victim);
+                    lastAccess.Remove(victim);
+                    var victimIndex = frames.IndexOf(victim);
                     frames[victimIndex] = page;
-
-                    queue.Enqueue(page);
                 }
             }
 
@@ -58,13 +57,16 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
                 ReplacedPage = replacedPage,
                 Frames = FrameSnapshot.CreateFrameSnapshot(frames, frameCount)
             });
+
+            lastAccess[page] = currentStep;
+            currentStep++;
         }
 
         return result;
     }
 
-    private int FindVictim(Queue<int> queue)
+    private int FindVictim(List<int> frames, Dictionary<int, int> lastAccess)
     {
-        return queue.Dequeue();
+        return frames.MinBy(p => lastAccess[p]);
     }
 }
