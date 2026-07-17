@@ -175,7 +175,7 @@ Exporting a result (from either UI) writes a `.csv` or `.md` file into an `expor
 
 <div align="center">
 
-*Operating Systems Project — Page Replacement Simulator*
+*Operating Systems — Page Replacement Simulator*
 *Mani Vakili — 40231996*
 
 </div>
