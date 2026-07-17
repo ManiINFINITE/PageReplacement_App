@@ -9,13 +9,17 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,28">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto, Auto" Margin="0,0,0,28">
             <StackPanel Grid.Column="0" Spacing="4">
                 <TextBlock Text="Compare All" Classes="H1" />
                 <TextBlock Text="{Binding ResultsSummaryLabel}" Classes="Body" />
             </StackPanel>
 
-            <Button Grid.Column="1" Classes="Primary" Content="Compare Algorithms"
+            <Button Grid.Column="1" Classes="Secondary" Content="Export Result"
+                    VerticalAlignment="Center" Command="{Binding OpenExportOverlayCommand}" 
+                    Margin="0 0 10 0"/>
+
+            <Button Grid.Column="2" Classes="Primary" Content="Compare Algorithms"
                     VerticalAlignment="Center" Command="{Binding OpenCompareCommand}" />
         </Grid>
 

@@ -17,7 +17,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                <Button Classes="Secondary" Content="Export" />
+                <Button Classes="Secondary" Content="Export Result" Command="{Binding OpenExportOverlayCommand}" />
             </StackPanel>
         </Grid>
 

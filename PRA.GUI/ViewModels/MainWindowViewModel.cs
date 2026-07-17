@@ -11,20 +11,11 @@ namespace PRA.GUI.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    // Whatever's currently on the Dashboard — preselected in the New
-    // Simulation overlay and reassignable once the user picks a different
-    // algorithm there.
     private IPageReplacementAlgorithm _algorithm = new FifoAlgorithm();
 
     public INavigationService Navigation { get; }
-
-    // Shared with page view-models (Compare All, etc.) so they can pop their
-    // own overlays without needing a reference back to the shell.
     public IOverlayService Overlay { get; }
 
-    // Kept as a standalone property (rather than only living inside the
-    // navigation cache) because the sidebar's "ALGORITHM" card shows it
-    // regardless of which page is currently active.
     [ObservableProperty] private DashboardViewModel dashboard;
     [ObservableProperty] private bool isSidebarCollapsed;
     [ObservableProperty] private string _collapseText;
@@ -37,14 +28,14 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        // Placeholder input until the GUI has its own setup screen — swap for
-        // whatever the user picks once you build that flow.
+        Overlay = new OverlayService();
+
+        // Placeholder input until the GUI has its own setup screen
         var reference = new List<int> { 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2 };
         var result = _algorithm.Run(reference, 3);
 
-        dashboard = new DashboardViewModel(result, reference);
-
-        Overlay = new OverlayService();
+        // Pass Overlay to DashboardViewModel
+        dashboard = new DashboardViewModel(result, reference, Overlay);
 
         Navigation = new NavigationService();
         Navigation.Register(AppPage.Dashboard, () => Dashboard);
@@ -76,10 +67,10 @@ public partial class MainWindowViewModel : ViewModelBase
         _algorithm = algorithm;
 
         var result = _algorithm.Run(referenceString, frameCount);
-        Dashboard = new DashboardViewModel(result, referenceString);
+        // Pass Overlay to DashboardViewModel
+        Dashboard = new DashboardViewModel(result, referenceString, Overlay);
 
-        // Re-point the Dashboard page at the fresh view-model and jump there.
-        Navigation.Register(AppPage.Dashboard, () => Dashboard, cache: false);
+        Navigation.Register(AppPage.Dashboard, () => Dashboard, false);
         Navigation.NavigateTo(AppPage.Dashboard);
 
         Overlay.Close();

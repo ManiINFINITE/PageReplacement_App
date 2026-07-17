@@ -2,6 +2,7 @@
 using PRA.CLI.Input;
 using PRA.CLI.Services;
 using PRA.Core.Models;
+using PRA.Core.Utilities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 
@@ -33,8 +34,8 @@ public class SimulationViewer
                     break;
                 case ConsoleKey.E:
                 {
-                    string csv = ExportService.ToCsv(result, referenceString);
-                    string md = ExportService.ToMarkdown(result, referenceString);
+                    string csv = ExportResult.ToCsv(result, referenceString);
+                    string md = ExportResult.ToMarkdown(result, referenceString);
                     string safeName = result.AlgorithmName.Replace(" ", "_").Replace("(", "").Replace(")", "");
 
                     string? path = ExportPrompt.Run(safeName, csv, md);
@@ -44,7 +45,7 @@ public class SimulationViewer
                     if (path is not null)
                         AnsiConsole.MarkupLine($"[green]Saved to[/] {path}");
                     else
-                        AnsiConsole.MarkupLine("[grey]Export cancelled.[/]");
+                        AnsiConsole.MarkupLine("[grey]ExportResult cancelled.[/]");
 
                     AnsiConsole.MarkupLine("[grey]Press aby key to continue...[/]");
                     Console.ReadKey(true);

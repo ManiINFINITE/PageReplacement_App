@@ -11,7 +11,7 @@ public static class Footer
             $"{Theme.Dim("←/→")} Step   " +
             $"{Theme.Dim("Home/End")} Jump   " +
             $"{Theme.Dim("T")} Toggle history   " +
-            $"{Theme.Dim("E")} Export   " +
+            $"{Theme.Dim("E")} ExportResult   " +
             $"{Theme.Accent("Esc")} Back");
 
         return new Rows(

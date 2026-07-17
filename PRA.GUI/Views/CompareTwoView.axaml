@@ -10,7 +10,7 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,20">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto, Auto" Margin="0,0,0,20">
             <StackPanel Grid.Column="0" Spacing="4">
                 <TextBlock Text="Compare Two" Classes="H1" />
                 <TextBlock Text="{Binding ResultsSummaryLabel}" Classes="Body" />
@@ -24,8 +24,12 @@
                 <Button Classes="Secondary" HorizontalAlignment="Stretch" Content="End"
                         Command="{Binding BothToEndCommand}" />
             </StackPanel>
+            
+            <Button Grid.Column="2" Classes="Secondary" Content="Export Result"
+                    Command="{Binding OpenExportOverlayCommand}"
+                    Margin="0 0 10 0"/>
 
-            <Button Grid.Column="2" Classes="Primary" Content="Compare Two Algorithms"
+            <Button Grid.Column="3" Classes="Primary" Content="Compare Two Algorithms"
                     VerticalAlignment="Center" Command="{Binding OpenCompareCommand}" />
         </Grid>
 

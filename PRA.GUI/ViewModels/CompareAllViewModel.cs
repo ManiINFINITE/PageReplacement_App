@@ -4,6 +4,7 @@ using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using PRA.Core.Models;
 using PRA.GUI.Models;
 using PRA.GUI.Services;
 
@@ -28,6 +29,10 @@ public partial class CompareAllViewModel : ViewModelBase
     ];
 
     readonly private IOverlayService _overlay;
+
+    // Store these for export
+    private List<int> _currentReference = [];
+    private IReadOnlyList<SimulationResult> _currentResults = [];
 
     [ObservableProperty] private bool hasResults;
     [ObservableProperty] private string resultsSummaryLabel = "";
@@ -55,12 +60,17 @@ public partial class CompareAllViewModel : ViewModelBase
 
     private void Run(List<int> reference, int frameCount)
     {
+        _currentReference = reference;
+
         var runs = AlgorithmCatalog.All
             .Select((algorithm, index) => (
                 Result: algorithm.Run(reference, frameCount),
                 Color: Palette[index % Palette.Length]
             ))
             .ToList();
+
+        // Store results for export
+        _currentResults = runs.Select(r => r.Result).ToList();
 
         int bestFaults = runs.Count == 0 ? 0 : runs.Min(r => r.Result.PageFaults);
 
@@ -76,5 +86,12 @@ public partial class CompareAllViewModel : ViewModelBase
         HasResults = true;
 
         _overlay.Close();
+    }
+
+    [RelayCommand]
+    private void OpenExportOverlay()
+    {
+        // Use the new ExportComparisonViewModel
+        _overlay.Open(new ExportComparisonViewModel(_currentResults, _currentReference, _overlay.Close));
     }
 }

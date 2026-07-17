@@ -3,6 +3,7 @@ using PRA.CLI.Input;
 using PRA.CLI.Screens;
 using PRA.CLI.Services;
 using PRA.Core.Models;
+using PRA.Core.Utilities;
 using Spectre.Console;
 
 namespace PRA.CLI.Viewers;
@@ -84,21 +85,21 @@ public class CompareViewer
                     .Title(Theme.Warn("What next?"))
                     .AddChoices(
                         results.Select(r => r.AlgorithmName)
-                            .Append("Export comparison")
+                            .Append("ExportResult comparison")
                             .Append("[grey]Back[/]")));
 
             if (choice == "[grey]Back[/]") return;
 
-            if (choice == "Export comparison")
+            if (choice == "ExportResult comparison")
             {
-                string csv = ExportService.ComparisonToCsv(results, referenceString);
-                string md = ExportService.ComparisonToMarkdown(results, referenceString);
+                string csv = ExportResult.ComparisonToCsv(results, referenceString);
+                string md = ExportResult.ComparisonToMarkdown(results, referenceString);
 
                 string? path = ExportPrompt.Run("comparison", csv, md);
 
                 AnsiConsole.MarkupLine(path is not null
                     ? $"{Theme.Hit("Saved to")} {path}"
-                    : Theme.Dim("Export cancelled."));
+                    : Theme.Dim("ExportResult cancelled."));
 
                 AnsiConsole.MarkupLine(Theme.Dim("Press any key to continue..."));
                 Console.ReadKey(true);

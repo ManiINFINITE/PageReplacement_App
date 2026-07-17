@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using PRA.CLI.Services;
+using PRA.Core.Utilities;
 
 namespace PRA.CLI.Input;
 
@@ -9,7 +10,7 @@ public static class ExportPrompt
     {
         string format = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-                .Title("[yellow]Export format[/]")
+                .Title("[yellow]ExportResult format[/]")
                 .AddChoices("CSV", "Markdown", "[grey]Cancel[/]"));
 
         if (format == "[grey]Cancel[/]") return null;
@@ -23,6 +24,6 @@ public static class ExportPrompt
 
         if (!fileName.EndsWith($".{extension}")) fileName += $".{extension}";
 
-        return ExportService.Save(content, fileName);
+        return ExportResult.Save(content, fileName);
     }
 }

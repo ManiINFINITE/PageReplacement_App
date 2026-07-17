@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PRA.Core.Models;
+using PRA.GUI.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PRA.GUI.ViewModels;
@@ -14,6 +15,8 @@ public partial class DashboardViewModel : ViewModelBase
     readonly private IReadOnlyList<int> _referenceString;
 
     [ObservableProperty] private int currentStep;
+
+    public IOverlayService Overlay { get; }
 
     public ObservableCollection<ReferenceTokenViewModel> ReferenceTokens { get; } = [];
     public ObservableCollection<FrameViewModel> Frames { get; } = [];
@@ -35,10 +38,16 @@ public partial class DashboardViewModel : ViewModelBase
     public IRelayCommand JumpToStartCommand { get; }
     public IRelayCommand JumpToEndCommand { get; }
 
-    public DashboardViewModel(SimulationResult result, IReadOnlyList<int> referenceString)
+    // Add IOverlayService to constructor
+    public DashboardViewModel(
+        SimulationResult result,
+        IReadOnlyList<int> referenceString,
+        IOverlayService overlayService
+    )
     {
         _result = result;
         _referenceString = referenceString;
+        Overlay = overlayService; // Store the service
 
         NextStepCommand = new RelayCommand(() =>
             CurrentStep = Math.Min(CurrentStep + 1, _result.Steps.Count - 1));
@@ -123,5 +132,11 @@ public partial class DashboardViewModel : ViewModelBase
 
             HistoryRows.Add(new HistoryRowViewModel($"F{f}", cells));
         }
+    }
+
+    [RelayCommand]
+    private void OpenExportOverlay()
+    {
+        Overlay.Open(new ExportInfoViewModel(_result, _referenceString, Overlay.Close));
     }
 }

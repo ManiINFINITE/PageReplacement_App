@@ -1,0 +1,38 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:PRA.GUI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PRA.GUI.Views.ExportInfoView"
+             x:DataType="vm:ExportInfoViewModel">
+
+    <Border Classes="OverlayCard" Width="440" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <StackPanel Spacing="20">
+
+            <StackPanel Spacing="4">
+                <TextBlock Text="Export the result" Classes="H1" />
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="FILE NAME" Classes="CardTitle" />
+                <TextBox Text="{Binding FileName}" />
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="EXPORT MODE" Classes="CardTitle" />
+                <ComboBox ItemsSource="{Binding ExportModes}"
+                          SelectedItem="{Binding SelectedExportMode}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Right">
+                <Button Classes="Secondary" Content="Cancel" Command="{Binding CancelCommand}" />
+                <Button Classes="Primary" Content="Export" Command="{Binding ExportCommand}" />
+            </StackPanel>
+
+        </StackPanel>
+
+    </Border>
+
+</UserControl>

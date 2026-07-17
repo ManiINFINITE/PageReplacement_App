@@ -1,9 +1,9 @@
 ﻿using PRA.Core.Models;
 using System.Text;
 
-namespace PRA.CLI.Services;
+namespace PRA.Core.Utilities;
 
-public static class ExportService
+public static class ExportResult
 {
     // ---------- Single algorithm run ----------
 
@@ -121,11 +121,31 @@ public static class ExportService
 
     public static string Save(string content, string fileName)
     {
-        string dir = Path.Combine(Environment.CurrentDirectory, "exports");
+        string solutionRoot = GetSolutionRoot();
+
+        string dir = Path.Combine(solutionRoot, "exports");
         Directory.CreateDirectory(dir);
 
         string path = Path.Combine(dir, fileName);
         File.WriteAllText(path, content);
         return path;
+    }
+
+    private static string GetSolutionRoot()
+    {
+        var directory = new DirectoryInfo(Environment.CurrentDirectory);
+
+        while (directory != null && !directory.GetFiles("*.sln").Any())
+        {
+            directory = directory.Parent;
+        }
+
+        if (directory != null)
+        {
+            return directory.FullName;
+        }
+
+        string fallbackDir = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");
+        return Path.GetFullPath(fallbackDir);
     }
 }

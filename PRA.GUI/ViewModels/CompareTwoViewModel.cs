@@ -1,17 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PRA.Core.Interfaces;
+using PRA.Core.Models;
 using PRA.GUI.Models;
 using PRA.GUI.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PRA.GUI.ViewModels;
 
-/// <summary>
-///     Runs two chosen algorithms against the same reference string and frame
-///     count, then shows each as a full single-simulation panel side by side.
-///     Input is collected via an overlay (see CompareTwoInputViewModel).
-/// </summary>
 public partial class CompareTwoViewModel : ViewModelBase
 {
     readonly private IOverlayService _overlay;
@@ -21,6 +18,11 @@ public partial class CompareTwoViewModel : ViewModelBase
 
     [ObservableProperty] private DashboardViewModel? left;
     [ObservableProperty] private DashboardViewModel? right;
+
+    // Store results for export
+    private List<int> _currentReference = [];
+    private SimulationResult? _leftResult;
+    private SimulationResult? _rightResult;
 
     public IRelayCommand OpenCompareCommand { get; }
 
@@ -51,11 +53,17 @@ public partial class CompareTwoViewModel : ViewModelBase
         IPageReplacementAlgorithm algorithmB
     )
     {
+        _currentReference = reference;
+        
         var resultA = algorithmA.Run(reference, frameCount);
         var resultB = algorithmB.Run(reference, frameCount);
+        
+        _leftResult = resultA;
+        _rightResult = resultB;
 
-        Left = new DashboardViewModel(resultA, reference);
-        Right = new DashboardViewModel(resultB, reference);
+        // Pass _overlay to both DashboardViewModels
+        Left = new DashboardViewModel(resultA, reference, _overlay);
+        Right = new DashboardViewModel(resultB, reference, _overlay);
 
         ResultsSummaryLabel = $"Reference: {string.Join(' ', reference)}  ·  {frameCount} frames";
         HasResults = true;
@@ -89,5 +97,15 @@ public partial class CompareTwoViewModel : ViewModelBase
     {
         Right!.JumpToEndCommand.Execute(null);
         Left!.JumpToEndCommand.Execute(null);
+    }
+
+    [RelayCommand]
+    private void OpenExportOverlay()
+    {
+        if (_leftResult != null && _rightResult != null && _currentReference.Count > 0)
+        {
+            var results = new List<SimulationResult> { _leftResult, _rightResult };
+            _overlay.Open(new ExportComparisonViewModel(results, _currentReference, _overlay.Close));
+        }
     }
 }
