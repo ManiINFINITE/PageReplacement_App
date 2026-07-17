@@ -41,7 +41,7 @@ public partial class MainWindowViewModel : ViewModelBase
         Navigation = new NavigationService();
         Navigation.Register(AppPage.Dashboard, () => Dashboard);
         Navigation.Register(AppPage.CompareAll, () => new CompareAllViewModel(Overlay));
-        Navigation.Register(AppPage.CompareTwo, () => new CompareTwoViewModel());
+        Navigation.Register(AppPage.CompareTwo, () => new CompareTwoViewModel(Overlay));
         Navigation.Register(AppPage.Settings, () => new SettingsViewModel());
 
         Navigation.NavigateTo(AppPage.Dashboard);

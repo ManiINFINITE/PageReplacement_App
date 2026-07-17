@@ -20,7 +20,7 @@ public class FifoAlgorithm : IPageReplacementAlgorithm
         var frames = new List<int>();
         var queue = new Queue<int>();
 
-        foreach (var page in referenceString)
+        foreach (int page in referenceString)
         {
             bool pageFault = false;
             int? replacedPage = null;

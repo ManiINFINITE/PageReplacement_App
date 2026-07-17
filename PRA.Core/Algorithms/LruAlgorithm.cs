@@ -22,7 +22,7 @@ public class LruAlgorithm : IPageReplacementAlgorithm
 
         int currentStep = 1;
 
-        foreach (var page in referenceString)
+        foreach (int page in referenceString)
         {
             bool pageFault = false;
             int? replacedPage = null;
@@ -42,10 +42,10 @@ public class LruAlgorithm : IPageReplacementAlgorithm
                 }
                 else
                 {
-                    var victim = FindVictim(frames, lastAccess);
+                    int victim = FindVictim(frames, lastAccess);
                     replacedPage = victim;
                     lastAccess.Remove(victim);
-                    var victimIndex = frames.IndexOf(victim);
+                    int victimIndex = frames.IndexOf(victim);
                     frames[victimIndex] = page;
                 }
             }

@@ -23,7 +23,7 @@ public class LfuAlgorithm : IPageReplacementAlgorithm
         int currentStep = 1;
 
 
-        foreach (var page in referenceString)
+        foreach (int page in referenceString)
         {
             bool pageFault = false;
             int? replacedPage = null;
@@ -57,7 +57,7 @@ public class LfuAlgorithm : IPageReplacementAlgorithm
                 }
             }
 
-            
+
             lastAccess[page] = currentStep;
             currentStep++;
 
