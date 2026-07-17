@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using PRA.GUI.ViewModels;
 
 namespace PRA.GUI.Views;

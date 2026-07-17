@@ -19,11 +19,11 @@
         <viewModels:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid ColumnDefinitions="Auto,*">
+    <Grid ColumnDefinitions="Auto,*" Background="{DynamicResource COLOR_RaisinBlack}">
 
         <!-- ===================== SIDEBAR ===================== -->
         <Border Grid.Column="0" Classes="Sidebar" Classes.Collapsed="{Binding IsSidebarCollapsed}">
-            <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Grid RowDefinitions="Auto,Auto,*,Auto, Auto">
 
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="8,8,8,24">
                     <StackPanel Grid.Column="0" Spacing="4">
@@ -76,24 +76,24 @@
                             <TextBlock Text="Compare Two" Classes="Collapsible" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Border Classes="Divider"/>
-                    <Button Classes="NavItem"
-                            Command="{Binding Navigation.NavigateCommand}"
-                            CommandParameter="{x:Static services:AppPage.Settings}"
-                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.Settings}}">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Border Classes="NavIcon">
-                                <TextBlock Text="&#xE270;"/>
-                            </Border>
-                            <TextBlock Text="Settings" Classes="Collapsible" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
                 </StackPanel>
                 
-                <Button Grid.Row="3" Classes="SidebarToggle" VerticalAlignment="Center"
-                        Command="{Binding ToggleSidebarCommand}"
-                        Content="{Binding IsSidebarCollapsed, Converter={x:Static converters:CollapsedChevronConverter.Instance}}"
-                        FontFamily="{DynamicResource Phosphor-Bold}"/>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="12" Margin="0 0 0 15">
+                    <Button Classes="ThemeToggle" VerticalAlignment="Center"
+                            Content="{Binding ThemeIcon}" FontFamily="{DynamicResource Phosphor-Bold}"
+                            Command="{Binding ToggleThemeCommand}"/>
+                    <TextBlock Text="Toggle Text" FontFamily="{DynamicResource Nunito-SemiBold}"
+                               VerticalAlignment="Center" Classes="Collapsible"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="12">
+                    <Button Classes="SidebarToggle" VerticalAlignment="Center"
+                            Command="{Binding ToggleSidebarCommand}"
+                            Content="{Binding IsSidebarCollapsed, Converter={x:Static converters:CollapsedChevronConverter.Instance}}"
+                            FontFamily="{DynamicResource Phosphor-Bold}"/>
+                    <TextBlock Text="{Binding CollapseText}" FontFamily="{DynamicResource Nunito-SemiBold}"
+                               VerticalAlignment="Center" Classes="Collapsible"/>
+                </StackPanel>
 
             </Grid>
         </Border>
