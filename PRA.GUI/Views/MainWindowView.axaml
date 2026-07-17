@@ -16,64 +16,96 @@
         WindowState="Maximized">
 
     <Design.DataContext>
-        <viewModels:MainWindowViewModel />
+        <viewModels:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid ColumnDefinitions="240,*">
+    <Grid ColumnDefinitions="Auto,*">
 
         <!-- ===================== SIDEBAR ===================== -->
-        <Border Grid.Column="0" Classes="Sidebar">
+        <Border Grid.Column="0" Classes="Sidebar" Classes.Collapsed="{Binding IsSidebarCollapsed}">
             <Grid RowDefinitions="Auto,Auto,*,Auto">
 
-                <StackPanel Grid.Row="0" Spacing="4" Margin="8,8,8,24">
-                    <TextBlock Text="PRA" Classes="H1" Foreground="{StaticResource BRUSH_FireOpal}" />
-                    <TextBlock Text="Page Replacement Sim" Classes="Caption" />
-                </StackPanel>
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="8,8,8,24">
+                    <StackPanel Grid.Column="0" Spacing="4">
+                        <TextBlock Text="PRA" Classes="H2" Foreground="{StaticResource BRUSH_FireOpal}"/>
+                        <TextBlock Text="Page Replacement Sim" Classes="Caption Collapsible"/>
+                    </StackPanel>
+                </Grid>
 
-                <Button Grid.Row="1" Classes="Primary" Content="+ New Simulation"
+                <Button Grid.Row="1" Classes="Primary"
                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                         Margin="0,0,0,20"
-                        Command="{Binding OpenNewSimulationCommand}" />
+                        Command="{Binding OpenNewSimulationCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                        <TextBlock Classes="PlusIcon Collapsed" Text="+" FontWeight="ExtraBold" FontSize="20" VerticalAlignment="Center"/>
+                        <TextBlock Text="New Simulation" Classes="Collapsible" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
 
                 <StackPanel Grid.Row="2" Spacing="2">
-                    <Button Classes="NavItem" Content="Dashboard"
+                    <Button Classes="NavItem"
                             Command="{Binding Navigation.NavigateCommand}"
                             CommandParameter="{x:Static services:AppPage.Dashboard}"
-                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.Dashboard}}" />
-                    <Button Classes="NavItem" Content="Compare All"
+                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.Dashboard}}">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Classes="NavIcon">
+                                <TextBlock Text="&#xE2C2;"/>
+                            </Border>
+                            <TextBlock Text="Dashboard" Classes="Collapsible" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="NavItem"
                             Command="{Binding Navigation.NavigateCommand}"
                             CommandParameter="{x:Static services:AppPage.CompareAll}"
-                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.CompareAll}}" />
-                    <Button Classes="NavItem" Content="Compare Two"
+                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.CompareAll}}">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Classes="NavIcon">
+                                <TextBlock Text="&#xE190;"/>
+                            </Border>
+                            <TextBlock Text="Compare All" Classes="Collapsible" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="NavItem"
                             Command="{Binding Navigation.NavigateCommand}"
                             CommandParameter="{x:Static services:AppPage.CompareTwo}"
-                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.CompareTwo}}" />
-                    <Border Classes="Divider" />
-                    <Button Classes="NavItem" Content="Settings"
+                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.CompareTwo}}">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Classes="NavIcon">
+                                <TextBlock Text="&#xE27C;"/>
+                            </Border>
+                            <TextBlock Text="Compare Two" Classes="Collapsible" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Border Classes="Divider"/>
+                    <Button Classes="NavItem"
                             Command="{Binding Navigation.NavigateCommand}"
                             CommandParameter="{x:Static services:AppPage.Settings}"
-                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.Settings}}" />
+                            Classes.Active="{Binding Navigation.CurrentPage, Converter={x:Static converters:EnumEqualsConverter.Instance}, ConverterParameter={x:Static services:AppPage.Settings}}">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Classes="NavIcon">
+                                <TextBlock Text="&#xE270;"/>
+                            </Border>
+                            <TextBlock Text="Settings" Classes="Collapsible" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
-
-                <Border Grid.Row="3" Classes="Card" Padding="14" Margin="0,0,0,8">
-                    <StackPanel Spacing="4">
-                        <TextBlock Text="ALGORITHM" Classes="CardTitle" />
-                        <TextBlock Text="{Binding Dashboard.AlgorithmName}" Classes="H3"
-                                   Foreground="{StaticResource BRUSH_FireOpal}" />
-                    </StackPanel>
-                </Border>
+                
+                <Button Grid.Row="3" Classes="SidebarToggle" VerticalAlignment="Center"
+                        Command="{Binding ToggleSidebarCommand}"
+                        Content="{Binding IsSidebarCollapsed, Converter={x:Static converters:CollapsedChevronConverter.Instance}}"
+                        FontFamily="{DynamicResource Phosphor-Bold}"/>
 
             </Grid>
         </Border>
 
         <!-- ===================== MAIN ===================== -->
         <Grid Grid.Column="1" Margin="32">
-            <ContentControl Content="{Binding Navigation.CurrentViewModel}" />
+            <ContentControl Content="{Binding Navigation.CurrentViewModel}"/>
         </Grid>
 
         <!-- ===================== OVERLAY ===================== -->
         <Border Grid.Column="0" Grid.ColumnSpan="2" Classes="Scrim" IsVisible="{Binding Overlay.IsVisible}">
-            <ContentControl Content="{Binding Overlay.CurrentViewModel}" />
+            <ContentControl Content="{Binding Overlay.CurrentViewModel}"/>
         </Border>
 
     </Grid>

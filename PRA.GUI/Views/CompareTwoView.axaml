@@ -15,12 +15,14 @@
                 <TextBlock Text="Compare Two" Classes="H1" />
                 <TextBlock Text="{Binding ResultsSummaryLabel}" Classes="Body" />
             </StackPanel>
-            
+
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
-                <Button Classes="Secondary" HorizontalAlignment="Stretch" Content="Start" Command="{Binding BothToStartCommand}"/>
-                <Button Classes="StepControl" Content="&#8592;" Command="{Binding BothPreviousStepCommand}"/>
-                <Button Classes="StepControl" Content="&#8594;" Command="{Binding BothNextStepCommand}"/>
-                <Button Classes="Secondary" HorizontalAlignment="Stretch" Content="End" Command="{Binding BothToEndCommand}"/>
+                <Button Classes="Secondary" HorizontalAlignment="Stretch" Content="Start"
+                        Command="{Binding BothToStartCommand}" />
+                <Button Classes="StepControl" Content="&#8592;" Command="{Binding BothPreviousStepCommand}" />
+                <Button Classes="StepControl" Content="&#8594;" Command="{Binding BothNextStepCommand}" />
+                <Button Classes="Secondary" HorizontalAlignment="Stretch" Content="End"
+                        Command="{Binding BothToEndCommand}" />
             </StackPanel>
 
             <Button Grid.Column="2" Classes="Primary" Content="Compare Two Algorithms"
@@ -29,10 +31,13 @@
 
         <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="20" IsVisible="{Binding HasResults}">
 
-            <views:AlgorithmSimulationView Grid.Column="0" DataContext="{Binding Left}" />
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <views:AlgorithmSimulationView DataContext="{Binding Left}" />
+            </ScrollViewer>
 
-            <views:AlgorithmSimulationView Grid.Column="1" DataContext="{Binding Right}" />
-
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <views:AlgorithmSimulationView DataContext="{Binding Right}" />
+            </ScrollViewer>
         </Grid>
 
     </Grid>

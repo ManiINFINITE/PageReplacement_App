@@ -1,0 +1,97 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Border.Sidebar">
+        <Setter Property="Width" Value="240"/>
+        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Width" Duration="0:0:0.22" Easing="CubicEaseInOut"/>
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.Sidebar.Collapsed">
+        <Setter Property="Width" Value="84"/>
+    </Style>
+
+    <!-- Collapsible controls - fade out when sidebar is collapsed -->
+    <Style Selector="Border.Sidebar TextBlock.Collapsible">
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.12"/>
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.Sidebar.Collapsed TextBlock.Collapsible">
+        <Setter Property="Opacity" Value="0"/>
+    </Style>
+
+    <!-- Also handle any other Control types that might use Collapsible class -->
+    <Style Selector="Border.Sidebar StackPanel.Collapsible">
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.05" Easing="CubicEaseOut"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="TextBlock.PlusIcon">
+        <Setter Property="Margin" Value="0"></Setter>
+    </Style>
+    
+    <Style Selector="TextBlock.PlusIcon.Collapsed">
+        <Setter Property="Margin" Value="5 0 0 0"></Setter>
+    </Style>
+
+    <Style Selector="Border.Sidebar.Collapsed StackPanel.Collapsible">
+        <Setter Property="Opacity" Value="0"/>
+    </Style>
+
+    <!-- Small round icon badge -->
+    <Style Selector="Border.NavIcon">
+        <Setter Property="Width" Value="28"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+    </Style>
+
+    <Style Selector="Border.NavIcon TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource Phosphor-Bold}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+    </Style>
+
+    <Style Selector="Button.NavItem.Active Border.NavIcon">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_FireOpal}"/>
+    </Style>
+
+    <Style Selector="Button.NavItem.Active Border.NavIcon TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_SmokyBlack}"/>
+    </Style>
+
+    <!-- Sidebar toggle button -->
+    <Style Selector="Button.SidebarToggle">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Jet}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BRUSH_TextSecondary}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5 0 0 0"/>
+    </Style>
+
+    <Style Selector="Button.SidebarToggle:pointerover">
+        <Setter Property="Background" Value="{DynamicResource BRUSH_Ash}"/>
+    </Style>
+
+</Styles>
