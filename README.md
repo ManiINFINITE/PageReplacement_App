@@ -3,7 +3,7 @@
 ### Operating Systems Project
 # 🧠 Page Replacement Simulator
 
-**Developed by Mani Vakili** · **Code: 40231996**
+**Developed by Mani Vakili**
 
 A .NET solution that implements and visualizes classical page replacement algorithms —
 one shared engine, two completely different front ends: a retro terminal UI and a modern desktop dashboard.
